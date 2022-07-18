@@ -1,0 +1,28 @@
+<div class="border border-dark border-2 rounded p-4 my-4">
+  <div class="d-flex justify-content-between align-items-center my-2">
+    <span class="">
+      <strong> Groups </strong>
+    </span>
+    <button type="button" class="btn btn-success">Add group</button>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Group name</th>
+        <th scope="col">Players count</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let group of groups">
+        <th scope="row">{{ group.id }}</th>
+        <td>{{ group.name }}</td>
+        <td>{{ group.players.length }}</td>
+        <td>
+          <button type="button" class="btn btn-danger mx-1" (click)="deleteGroup(group.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,13 @@
+<div class="row m-2">
+  <div class="col-md-6 groups">
+    <app-section-header [title]="'Players'"></app-section-header>
+    <app-players-groups
+      [groups]="groups$ | async"
+      (deleteGroupEvent)="deleteGroup($event)"
+    ></app-players-groups>
+    <app-players-group></app-players-group>
+  </div>
+  <div class="col-md-6">
+    <span>Teams</span>
+  </div>
+</div>
