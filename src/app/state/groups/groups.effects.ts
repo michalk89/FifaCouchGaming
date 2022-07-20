@@ -3,10 +3,12 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { GroupsPageActions, GroupsApiActions } from "./actions";
 import { catchError, mergeMap, of } from "rxjs";
 import { map, tap } from "rxjs";
+import { Store } from "@ngrx/store";
+import { State } from "../app.state";
 
 @Injectable()
 export class GroupsEffects {
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions, private store: Store<State>) {}
 
   // TEMP
   groupsTempData = [
@@ -71,9 +73,35 @@ export class GroupsEffects {
     );
   });
 
+  addGroup$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GroupsPageActions.createGroup),
+      mergeMap((action) =>
+        of(action.group).pipe(
+          map(() =>
+            GroupsApiActions.createGroupSuccess({ group: action.group })
+          ),
+          catchError((error) =>
+            of(GroupsApiActions.createGroupFailure({ error }))
+          )
+        )
+      )
+    );
+  });
 
-  // TODO: add
-
-
-  // TODO: edit
+  updateGroup$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GroupsPageActions.updateGroup),
+      mergeMap((action) =>
+        of(action.group).pipe(
+          map(() =>
+            GroupsApiActions.updateGroupSuccess({ group: action.group })
+          ),
+          catchError((error) =>
+            of(GroupsApiActions.updateGroupFailure({ error }))
+          )
+        )
+      )
+    );
+  });
 }

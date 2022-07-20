@@ -3,6 +3,11 @@ import { GroupsState } from "./groups.reducer";
 
 const getGroupsFeatureState = createFeatureSelector<GroupsState>('groups');
 
+export const getIsEditMode = createSelector(
+    getGroupsFeatureState,
+    state => state.editMode
+);
+
 export const getCurrentGroupId = createSelector(
     getGroupsFeatureState,
     state => state.currentGroupId
@@ -19,7 +24,7 @@ export const getCurrentGroup = createSelector(
                 players: []
             };
         } else {
-            return currentGroupId ? state.groups.find(g => g.id === currentGroupId) : null;
+            return currentGroupId ? state.groups.find(g => g.id === currentGroupId) ?? null : null;
         }
     }
 );

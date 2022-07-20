@@ -9,6 +9,7 @@ import { GroupModel } from 'src/app/models/group.model';
 export class PlayersGroupsComponent implements OnInit {
   @Input() groups: GroupModel[] | null;
   @Output() deleteGroupEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() groupSelectedEvent: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }
 
@@ -19,4 +20,7 @@ export class PlayersGroupsComponent implements OnInit {
     this.deleteGroupEvent.emit(id);
   };
 
+  rowSelected = (id: number) => {
+    this.groupSelectedEvent.emit(id);
+  };
 }

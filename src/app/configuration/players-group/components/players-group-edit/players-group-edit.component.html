@@ -1,0 +1,66 @@
+<div class="border border-dark border-2 rounded p-4 my-4">
+  <form novalidate (ngSubmit)="saveGroup()" [formGroup]="groupForm">
+    <div class="d-flex justify-content-between align-items-center my-2">
+      <div>
+        <input
+          type="text"
+          class="form-control"
+          id="groupName"
+          placeholder="Enter name"
+          formControlName="name"
+        />
+      </div>
+      <div>
+        <button
+          type="button"
+          class="btn btn-success me-1"
+          (click)="addPlayer()"
+        >
+          Add player
+        </button>
+        <button
+          type="button"
+          class="btn btn-success mx-1"
+          (click)="saveGroup()"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger ms-1"
+          (click)="toggleEditMode()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+    <div class="border-top border-2 border-dark">
+      <ng-container formArrayName="players">
+        <ng-container
+          *ngFor="let playerForm of players.controls; let index = index"
+        >
+          <div class="row my-2" [formGroupName]="index">
+            <div class="col-md-8">
+              <input
+                type="text"
+                class="form-control"
+                id="playerName_{{ index }}"
+                placeholder="Enter name"
+                formControlName="name"
+              />
+            </div>
+            <div class="col-md-4 d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-danger ms-1"
+                (click)="deletePlayer(index)"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+</div>

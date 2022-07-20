@@ -1,22 +1,14 @@
-<div class="border border-dark border-2 rounded p-4 my-4">
-  <div class="d-flex justify-content-between align-items-center my-2">
-    <span>Group players</span>
-    <button type="button" class="btn btn-outline-success">Add player</button>  
-  </div>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Player</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>TODO</td>
-        <td>TODO</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<ng-container *ngIf="!editMode">
+  <app-players-group-view
+    [group]="group"
+    (toggleEditModeEvent)="toggleEditMode()"
+  ></app-players-group-view>
+</ng-container>
+<ng-container *ngIf="editMode">
+  <app-players-group-edit
+    [group]="group"
+    (toggleEditModeEvent)="toggleEditMode()"
+    (saveGroupEvent)="saveGroup($event)"
+  ></app-players-group-edit>
+</ng-container>
+

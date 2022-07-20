@@ -1,0 +1,24 @@
+<div class="border border-dark border-2 rounded p-4 my-4">
+  <div class="d-flex justify-content-between align-items-center my-2">
+    <span>
+      <strong>{{ group?.name }}</strong>
+    </span>
+    <button type="button" class="btn btn-primary" (click)="toggleEditMode()">
+      Edit group
+    </button>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Player</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let player of group?.players; trackBy: identifyPlayer">
+        <th scope="row">{{ player.id }}</th>
+        <td>{{ player.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

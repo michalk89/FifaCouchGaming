@@ -1,6 +1,10 @@
 import { createAction, props } from "@ngrx/store";
 import { GroupModel } from "src/app/models/group.model";
 
+export const toggleEditMode = createAction(
+  "[Groups] Toggle Edit Mode"
+);
+
 export const setCurrentGroup = createAction(
   "[Groups] Set Current Group",
   props<{ currentGroupId: number }>()

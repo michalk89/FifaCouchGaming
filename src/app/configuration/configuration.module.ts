@@ -9,6 +9,9 @@ import { StoreModule } from '@ngrx/store';
 import { groupsReducer } from '../state/groups/groups.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { GroupsEffects } from '../state/groups/groups.effects';
+import { PlayersGroupViewComponent } from './players-group/components/players-group-view/players-group-view.component';
+import { PlayersGroupEditComponent } from './players-group/components/players-group-edit/players-group-edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const configurationRoutes: Routes = [
   { path: '', component: ConfigurationComponent }
@@ -18,11 +21,14 @@ const configurationRoutes: Routes = [
   declarations: [
     PlayersGroupsComponent,
     PlayersGroupComponent,
-    ConfigurationComponent
+    ConfigurationComponent,
+    PlayersGroupViewComponent,
+    PlayersGroupEditComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
+    ReactiveFormsModule,
     RouterModule.forChild(configurationRoutes),
     StoreModule.forFeature('groups', groupsReducer),
     EffectsModule.forFeature([GroupsEffects])
