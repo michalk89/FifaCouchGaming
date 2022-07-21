@@ -12,6 +12,11 @@ import { GroupsEffects } from '../state/groups/groups.effects';
 import { PlayersGroupViewComponent } from './players-group/components/players-group-view/players-group-view.component';
 import { PlayersGroupEditComponent } from './players-group/components/players-group-edit/players-group-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { selectionsReducer } from '../state/selections/selections.reducer';
+import { TeamsSelectionsComponent } from './teams-selections/teams-selections.component';
+import { SelectionsEffects } from '../state/selections/selections.effects';
+import { TeamsCreateSelectionComponent } from './teams-selections/components/teams-create-selection/teams-create-selection.component';
+import { TeamsSelectionComponent } from './teams-selection/teams-selection.component';
 
 const configurationRoutes: Routes = [
   { path: '', component: ConfigurationComponent }
@@ -23,7 +28,10 @@ const configurationRoutes: Routes = [
     PlayersGroupComponent,
     ConfigurationComponent,
     PlayersGroupViewComponent,
-    PlayersGroupEditComponent
+    PlayersGroupEditComponent,
+    TeamsSelectionsComponent,
+    TeamsCreateSelectionComponent,
+    TeamsSelectionComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +39,8 @@ const configurationRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(configurationRoutes),
     StoreModule.forFeature('groups', groupsReducer),
-    EffectsModule.forFeature([GroupsEffects])
+    StoreModule.forFeature('selections', selectionsReducer),
+    EffectsModule.forFeature([GroupsEffects, SelectionsEffects])
   ]
 })
 export class ConfigurationModule { }

@@ -1,0 +1,46 @@
+<div class="border border-dark border-2 rounded p-4 my-4">
+  <div class="d-flex justify-content-between align-items-center my-2">
+    <span class="">
+      <strong> Selections </strong>
+    </span>
+    <button type="button" class="btn btn-success" (click)="showCreateSelection()">
+      Add selection
+    </button>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Selection name</th>
+        <th scope="col">Teams count</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let selection of selections"
+        (click)="rowSelected(selection.id)"
+      >
+        <th scope="row">{{ selection.id }}</th>
+        <td>{{ selection.name }}</td>
+        <td>{{ selection.selectedTeams.length }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-danger mx-1"
+            (click)="deleteSelection(selection.id)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-container *ngIf="showCreateSelectionComponent">
+    <app-teams-create-selection
+      (createSelectionEvent)="addSelection($event)"
+      (cancelCreateSelectionEvent)="cancelAddCreation()"
+    >
+    </app-teams-create-selection>
+  </ng-container>
+</div>

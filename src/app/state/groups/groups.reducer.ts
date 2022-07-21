@@ -7,10 +7,37 @@ export interface GroupsState {
   currentGroupId: number | null;
   error: string;
   editMode: boolean;
-}
+};
 
 const initialState: GroupsState = {
-  groups: [],
+  groups: [    {
+    id: 1,
+    name: "Quickers",
+    players: [
+      {
+        id: 1,
+        name: "QuickBoy",
+      },
+      {
+        id: 2,
+        name: "QuickerGirl",
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Slowers",
+    players: [
+      {
+        id: 3,
+        name: "SlowBoy",
+      },
+      {
+        id: 4,
+        name: "SlowerGirl",
+      },
+    ],
+  }],
   currentGroupId: null,
   error: "",
   editMode: false
@@ -42,6 +69,7 @@ export const groupsReducer = createReducer<GroupsState>(
     return {
       ...state,
       currentGroupId: 0,
+      editMode: true
     };
   }),
   on(GroupsApiActions.loadGroupsSuccess, (state, action): GroupsState => {
@@ -92,9 +120,17 @@ export const groupsReducer = createReducer<GroupsState>(
     }
   }),
   on(GroupsApiActions.createGroupSuccess, (state, action): GroupsState => {
+    // id update - normally it would get id @ backend
+    const updatedGroup = {
+      ...action.group,
+      id: state.groups.length + 1
+    };
+
     return {
       ...state,
-      groups: [...state.groups, action.group],
+      groups: [...state.groups, updatedGroup],
+      editMode: false,
+      currentGroupId: updatedGroup.id,
       error: ''
     }
   }),

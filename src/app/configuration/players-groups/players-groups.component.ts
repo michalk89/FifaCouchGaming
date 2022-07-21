@@ -10,6 +10,7 @@ export class PlayersGroupsComponent implements OnInit {
   @Input() groups: GroupModel[] | null;
   @Output() deleteGroupEvent: EventEmitter<number> = new EventEmitter<number>();
   @Output() groupSelectedEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() createGroupEvent: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() { }
 
@@ -22,5 +23,9 @@ export class PlayersGroupsComponent implements OnInit {
 
   rowSelected = (id: number) => {
     this.groupSelectedEvent.emit(id);
+  };
+
+  addGroup = () => {
+    this.createGroupEvent.emit();
   };
 }

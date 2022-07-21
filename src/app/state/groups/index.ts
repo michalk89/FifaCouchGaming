@@ -20,7 +20,7 @@ export const getCurrentGroup = createSelector(
         if (currentGroupId === 0) {
             return {
                 id: 0,
-                name: 'new',
+                name: 'New',
                 players: []
             };
         } else {

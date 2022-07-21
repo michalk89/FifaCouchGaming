@@ -19,7 +19,7 @@ export class PlayersGroupEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //this.groupChanged();
+
   };
 
   ngOnChanges(changes: SimpleChanges) {
@@ -29,7 +29,6 @@ export class PlayersGroupEditComponent implements OnInit {
   }
 
   groupChanged = () => {
-    debugger
     this.groupForm = this.fb.group({
       name: [this.group?.name ?? "", [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       players: this.fb.array([])
@@ -47,10 +46,10 @@ export class PlayersGroupEditComponent implements OnInit {
     const group: GroupModel = {
       id: this.group?.id ?? 0,
       name: this.name.value,
-      players: this.players.value.map((name: string, index: number) => {
+      players: this.players.value.map((val: { name: string }, index: number) => {
         return {
           id: index + 1,
-          name: name
+          name: val.name
         }
       })
     };

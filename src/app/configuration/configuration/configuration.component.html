@@ -5,6 +5,7 @@
       [groups]="groups$ | async"
       (deleteGroupEvent)="deleteGroup($event)"
       (groupSelectedEvent)="setCurrentGroup($event)"
+      (createGroupEvent)="createGroup()"
     ></app-players-groups>
     <ng-container *ngIf="selectedGroup$ | async">
       <app-players-group
@@ -16,6 +17,15 @@
     </ng-container>
   </div>
   <div class="col-md-6">
-    <span>Teams</span>
+    <app-section-header [title]="'Teams'"></app-section-header>
+    <app-teams-selections
+      [selections]="selections$ | async"
+      (deleteSelectionEvent)="deleteSelection($event)"
+      (selectionSelectedEvent)="setCurrentSelection($event)"
+      (createSelectionEvent)="createSelection($event)"
+    ></app-teams-selections>
+    <ng-container *ngIf="selectedSelection$ | async">
+      <app-teams-selection></app-teams-selection>
+    </ng-container>
   </div>
 </div>
