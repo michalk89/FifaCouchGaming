@@ -25,7 +25,12 @@
       (createSelectionEvent)="createSelection($event)"
     ></app-teams-selections>
     <ng-container *ngIf="selectedSelection$ | async">
-      <app-teams-selection></app-teams-selection>
+      <app-teams-selection
+        [leagues]="leagues$ | async"
+        [selectedTeams]="(selectedSelection$ | async)!.selectedTeams"
+        (addTeamToCurrentSelectionEvent)="addTeamToSelection($event)"
+      >
+      </app-teams-selection>
     </ng-container>
   </div>
 </div>

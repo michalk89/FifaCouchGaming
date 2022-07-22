@@ -1,5 +1,5 @@
 export interface TeamModel {
     id: number;
     name: string;
-    leagueId: number;
+    stars: number;
 }

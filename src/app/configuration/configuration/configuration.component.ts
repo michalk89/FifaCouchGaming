@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { GroupModel } from "src/app/models/group.model";
+import { LeagueTeamModel } from "src/app/models/league-team.model";
+import { LeagueModel } from "src/app/models/league.model";
 import { SelectionModel } from "src/app/models/selection.model";
 import { State } from "src/app/state/app.state";
 import {
@@ -15,6 +17,7 @@ import {
   getCurrentSelection,
   getSelections,
   getError as getSelectionsError,
+  getLeagues,
 } from "src/app/state/selections";
 import { SelectionsPageActions } from "src/app/state/selections/actions";
 
@@ -34,6 +37,7 @@ export class ConfigurationComponent implements OnInit {
   selectedSelection$: Observable<SelectionModel | null>;
   selections$: Observable<SelectionModel[]>;
   selectionsError$: Observable<string>;
+  leagues$: Observable<LeagueModel[]>;
 
   constructor(private store: Store<State>) {}
 
@@ -48,6 +52,7 @@ export class ConfigurationComponent implements OnInit {
 
     this.selections$ = this.store.select(getSelections);
     this.selectedSelection$ = this.store.select(getCurrentSelection);
+    this.leagues$ = this.store.select(getLeagues);
     this.selectionsError$ = this.store.select(getSelectionsError);
   }
 
@@ -89,5 +94,9 @@ export class ConfigurationComponent implements OnInit {
 
   createSelection = (selection: SelectionModel) => {
     this.store.dispatch(SelectionsPageActions.createSelection({ selection }));
+  };
+
+  addTeamToSelection = (data: LeagueTeamModel) => {
+    this.store.dispatch(SelectionsPageActions.addTeamToSelection(data));
   };
 }

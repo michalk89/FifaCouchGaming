@@ -17,6 +17,8 @@ import { TeamsSelectionsComponent } from './teams-selections/teams-selections.co
 import { SelectionsEffects } from '../state/selections/selections.effects';
 import { TeamsCreateSelectionComponent } from './teams-selections/components/teams-create-selection/teams-create-selection.component';
 import { TeamsSelectionComponent } from './teams-selection/teams-selection.component';
+import { LeagueComponent } from './teams-selection/components/league/league.component';
+import { BarRatingModule } from 'ngx-bar-rating';
 
 const configurationRoutes: Routes = [
   { path: '', component: ConfigurationComponent }
@@ -31,7 +33,8 @@ const configurationRoutes: Routes = [
     PlayersGroupEditComponent,
     TeamsSelectionsComponent,
     TeamsCreateSelectionComponent,
-    TeamsSelectionComponent
+    TeamsSelectionComponent,
+    LeagueComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +43,8 @@ const configurationRoutes: Routes = [
     RouterModule.forChild(configurationRoutes),
     StoreModule.forFeature('groups', groupsReducer),
     StoreModule.forFeature('selections', selectionsReducer),
-    EffectsModule.forFeature([GroupsEffects, SelectionsEffects])
+    EffectsModule.forFeature([GroupsEffects, SelectionsEffects]),
+    BarRatingModule
   ]
 })
 export class ConfigurationModule { }

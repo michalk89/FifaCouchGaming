@@ -30,3 +30,8 @@ export const deleteSelection = createAction(
   "[Selections] Delete Selection",
   props<{ selectionId: number }>()
 );
+
+export const addTeamToSelection = createAction(
+  "[Selections] Add Team To Selection",
+  props<{ leagueId: number, teamId: number}>()
+);

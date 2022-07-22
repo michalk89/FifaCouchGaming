@@ -33,3 +33,8 @@ export const getError = createSelector(
     getSelectionsFeatureState,
     state => state.error
 );
+
+export const getLeagues = createSelector(
+    getSelectionsFeatureState,
+    state => state.leagues
+);
