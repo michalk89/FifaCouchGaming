@@ -1,7 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { LeagueModel } from "src/app/models/league.model";
 import { SelectionModel } from "src/app/models/selection.model";
-import { updateGroup } from "../groups/actions/groups-page.actions";
 import { SelectionsApiActions, SelectionsPageActions } from "./actions";
 
 export interface SelectionsState {
@@ -387,6 +386,15 @@ export const selectionsReducer = createReducer<SelectionsState>(
 
     updatedGroup = {...updatedGroup, selectedTeams: [...updatedGroup.selectedTeams, team] };
     
+    return {
+      ...state,
+      selections: state.selections.map(s => s.id === state.currentSelectionId ? updatedGroup : s)
+    }
+  }),
+  on(SelectionsPageActions.deleteTeamFromSelection, (state, action): SelectionsState => {
+    let updatedGroup = state.selections.find(s => s.id === state.currentSelectionId)!;
+    updatedGroup = {...updatedGroup, selectedTeams: [...updatedGroup.selectedTeams.filter(t => t.id !== action.team.id )]}
+
     return {
       ...state,
       selections: state.selections.map(s => s.id === state.currentSelectionId ? updatedGroup : s)

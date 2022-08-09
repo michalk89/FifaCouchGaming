@@ -5,6 +5,7 @@ import { GroupModel } from "src/app/models/group.model";
 import { LeagueTeamModel } from "src/app/models/league-team.model";
 import { LeagueModel } from "src/app/models/league.model";
 import { SelectionModel } from "src/app/models/selection.model";
+import { TeamModel } from "src/app/models/team.model";
 import { State } from "src/app/state/app.state";
 import {
   getCurrentGroup,
@@ -98,5 +99,9 @@ export class ConfigurationComponent implements OnInit {
 
   addTeamToSelection = (data: LeagueTeamModel) => {
     this.store.dispatch(SelectionsPageActions.addTeamToSelection(data));
+  };
+
+  deleteTeamFromSelection = (data: TeamModel) => {
+    this.store.dispatch(SelectionsPageActions.deleteTeamFromSelection({ team: data }))
   };
 }

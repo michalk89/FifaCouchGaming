@@ -29,6 +29,7 @@
         [leagues]="leagues$ | async"
         [selectedTeams]="(selectedSelection$ | async)!.selectedTeams"
         (addTeamToCurrentSelectionEvent)="addTeamToSelection($event)"
+        (deleteTeamFromCurrentSelectionEvent)="deleteTeamFromSelection($event)"
       >
       </app-teams-selection>
     </ng-container>

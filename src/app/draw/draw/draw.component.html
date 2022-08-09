@@ -1,0 +1,15 @@
+<div class="row m-2">
+    <div class="col-md-12 groups">
+      <app-draw-options
+        [groups]="groups$ | async"
+        [selections]="selections$ | async"
+        (resultsDrawnEvent)="setResults($event)"
+      ></app-draw-options>
+      <ng-container *ngIf="drawResults && drawResults.length > 0">
+        <app-results
+            [results]="drawResults"
+        ></app-results>
+      </ng-container>
+    </div>
+</div>
+  

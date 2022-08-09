@@ -1,5 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { SelectionModel } from "src/app/models/selection.model";
+import { TeamModel } from "src/app/models/team.model";
 
 export const setCurrentSelection = createAction(
   "[Selections] Set Current Selection",
@@ -35,3 +36,8 @@ export const addTeamToSelection = createAction(
   "[Selections] Add Team To Selection",
   props<{ leagueId: number, teamId: number}>()
 );
+
+export const deleteTeamFromSelection = createAction(
+  "[Selections] Delete Team From Selection",
+  props<{ team: TeamModel }>()
+)

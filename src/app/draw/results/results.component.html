@@ -1,0 +1,14 @@
+<app-section-header [title]="'Results'"></app-section-header>
+<div class="border border-dark border-2 rounded p-4 my-4 row">
+  <ng-container *ngFor="let r of results">
+    <div class="col-md-3">
+      <div class="d-flex flex-column justify-content-center align-items-center border border-dark border-2 rounded p-4 my-4">
+        <strong>{{ r.playerName }}</strong>
+        <hr />
+        <ul>
+          <li *ngFor="let t of r.drawnTeams">{{ t }}</li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+</div>

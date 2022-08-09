@@ -12,6 +12,7 @@ export class TeamsSelectionComponent implements OnInit {
   @Input() leagues: LeagueModel[] | null;
   @Input() selectedTeams: TeamModel[];
   @Output() addTeamToCurrentSelectionEvent: EventEmitter<LeagueTeamModel> = new EventEmitter<LeagueTeamModel>();
+  @Output() deleteTeamFromCurrentSelectionEvent: EventEmitter<TeamModel> = new EventEmitter<TeamModel>();
 
 
   constructor() {}
@@ -22,5 +23,9 @@ export class TeamsSelectionComponent implements OnInit {
 
   addTeamToSelection = (data: LeagueTeamModel) => {
     this.addTeamToCurrentSelectionEvent.emit(data);
+  };
+
+  deleteTeamFromSelection = (data: TeamModel) => {
+    this.deleteTeamFromCurrentSelectionEvent.emit(data);
   };
 }

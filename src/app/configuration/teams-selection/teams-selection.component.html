@@ -28,6 +28,7 @@
             <div class="accordion-body">
               <app-league
                 [league]="league"
+                [selectedTeams]="selectedTeams"
                 (addTeamToSelectionEvent)="addTeamToSelection($event)"
               ></app-league>
             </div>
@@ -46,6 +47,7 @@
       <button
         type="button"
         class="btn btn-danger ms-2"
+        (click)="deleteTeamFromSelection(team)"
       >
         -
       </button>

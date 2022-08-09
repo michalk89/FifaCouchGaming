@@ -1,0 +1,37 @@
+<app-section-header [title]="'Draw'"></app-section-header>
+<div class="border border-dark border-2 rounded p-4 my-4 row">
+  <div class="col-md-3" *ngIf="groups">
+    <label for="playersGroups" class="form-label">Choose players group</label>
+    <select class="form-select mb-3" id="playersGroups">
+      <option *ngFor="let g of groups" value="g.id">{{ g.name }}</option>
+    </select>
+  </div>
+  <div class="col-md-3" *ngIf="selections">
+    <label for="teamsSelections" class="form-label"
+      >Choose teams selection</label
+    >
+    <select class="form-select mb-3" id="teamsSelections">
+        <option *ngFor="let s of selections" value="s.id">{{ s.name }}</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <label for="teamsPerPlayer" class="form-label"
+      >How many teams per player</label
+    >
+    <select class="form-select mb-3" id="teamsPerPlayer">
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <label for="canRepeat" class="form-label">Can teams repeat?</label>
+    <select class="form-select mb-3" id="canRepeat">
+      <option value="1">No</option>
+      <option value="2">Yes</option>
+    </select>
+  </div>
+  <div class="col-md-12 d-flex justify-content-center">
+    <button type="button" class="btn btn-success btn-lg my-5" (click)="draw()">DRAW</button>
+  </div>
+</div>
