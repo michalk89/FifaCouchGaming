@@ -1,0 +1,7 @@
+<div class="border border-dark border-2 rounded p-4 my-4">
+    <ng-container *ngIf="selectedGroup">
+        <ul>
+            <li *ngFor="let player of selectedGroup.players">{{ player.name }}</li>
+        </ul>
+    </ng-container>
+</div>

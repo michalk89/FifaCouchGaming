@@ -1,0 +1,7 @@
+<div class="border border-dark border-2 rounded p-4 my-4">
+  <ng-container *ngIf="selectedSelection">
+    <ul>
+      <li *ngFor="let team of selectedSelection.selectedTeams">{{ team.name }}</li>
+    </ul>
+  </ng-container>
+</div>

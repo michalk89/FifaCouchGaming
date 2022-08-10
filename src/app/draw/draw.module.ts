@@ -11,6 +11,9 @@ import { GroupsEffects } from '../state/groups/groups.effects';
 import { groupsReducer } from '../state/groups/groups.reducer';
 import { SelectionsEffects } from '../state/selections/selections.effects';
 import { selectionsReducer } from '../state/selections/selections.reducer';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DrawPlayersPreviewComponent } from './draw-options/components/draw-players-preview/draw-players-preview.component';
+import { DrawTeamsPreviewComponent } from './draw-options/components/draw-teams-preview/draw-teams-preview.component';
 
 const drawRoutes: Routes = [
   { path: '', component: DrawComponent }
@@ -20,11 +23,14 @@ const drawRoutes: Routes = [
   declarations: [
     DrawComponent,
     ResultsComponent,
-    DrawOptionsComponent
+    DrawOptionsComponent,
+    DrawPlayersPreviewComponent,
+    DrawTeamsPreviewComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
+    ReactiveFormsModule,
     RouterModule.forChild(drawRoutes),
     StoreModule.forFeature('groups', groupsReducer),
     StoreModule.forFeature('selections', selectionsReducer),
