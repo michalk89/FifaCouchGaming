@@ -353,6 +353,15 @@ const initialState: SelectionsState = {
   error: "",
 };
 
+const updateSelections = (
+  updatedGroup: SelectionModel,
+  state: SelectionsState
+): SelectionModel[] => {
+  return state.selections.map((s) =>
+    s.id === state.currentSelectionId ? updatedGroup : s
+  );
+};
+
 export const selectionsReducer = createReducer<SelectionsState>(
   initialState,
   on(
@@ -379,27 +388,121 @@ export const selectionsReducer = createReducer<SelectionsState>(
       };
     }
   ),
-  on(SelectionsPageActions.addTeamToSelection, (state, action): SelectionsState => {
-    let updatedGroup = state.selections.find(s => s.id === state.currentSelectionId)!;
-    const league = state.leagues.find(l => l.id === action.leagueId)!;
-    const team = league?.teams.find(t => t.id === action.teamId)!;
+  on(
+    SelectionsPageActions.addTeamToSelection,
+    (state, action): SelectionsState => {
+      let updatedGroup = state.selections.find(
+        (s) => s.id === state.currentSelectionId
+      )!;
+      const league = state.leagues.find((l) => l.id === action.leagueId)!;
+      const team = league?.teams.find((t) => t.id === action.teamId)!;
 
-    updatedGroup = {...updatedGroup, selectedTeams: [...updatedGroup.selectedTeams, team] };
-    
+      updatedGroup = {
+        ...updatedGroup,
+        selectedTeams: [...updatedGroup.selectedTeams, team],
+      };
+
+      return {
+        ...state,
+        selections: updateSelections(updatedGroup, state),
+      };
+    }
+  ),
+  on(
+    SelectionsPageActions.deleteTeamFromSelection,
+    (state, action): SelectionsState => {
+      let updatedGroup = state.selections.find(
+        (s) => s.id === state.currentSelectionId
+      )!;
+      updatedGroup = {
+        ...updatedGroup,
+        selectedTeams: [
+          ...updatedGroup.selectedTeams.filter((t) => t.id !== action.team.id),
+        ],
+      };
+
+      return {
+        ...state,
+        selections: updateSelections(updatedGroup, state),
+      };
+    }
+  ),
+  on(
+    SelectionsPageActions.addAllTeamsFromLeagueToSelection,
+    (state, action): SelectionsState => {
+      const teams = state.leagues.find((l) => l.id === action.leagueId)?.teams;
+      let updatedGroup = state.selections.find(
+        (s) => s.id === state.currentSelectionId
+      )!;
+      updatedGroup = {
+        ...updatedGroup,
+        selectedTeams: [...updatedGroup.selectedTeams, ...(teams ?? [])],
+      };
+
+      return {
+        ...state,
+        selections: updateSelections(updatedGroup, state),
+      };
+    }
+  ),
+  on(SelectionsPageActions.addAllTeamsToSelection, (state): SelectionsState => {
+    const allTeams = state.leagues.flatMap((l) => l.teams);
+    let updatedGroup = state.selections.find(
+      (s) => s.id === state.currentSelectionId
+    )!;
+    updatedGroup = { ...updatedGroup, selectedTeams: allTeams };
+
     return {
       ...state,
-      selections: state.selections.map(s => s.id === state.currentSelectionId ? updatedGroup : s)
-    }
+      selections: updateSelections(updatedGroup, state),
+    };
   }),
-  on(SelectionsPageActions.deleteTeamFromSelection, (state, action): SelectionsState => {
-    let updatedGroup = state.selections.find(s => s.id === state.currentSelectionId)!;
-    updatedGroup = {...updatedGroup, selectedTeams: [...updatedGroup.selectedTeams.filter(t => t.id !== action.team.id )]}
+  on(
+    SelectionsPageActions.removeAllTeamsFromSelection,
+    (state): SelectionsState => {
+      let updatedGroup = state.selections.find(
+        (s) => s.id === state.currentSelectionId
+      )!;
+      updatedGroup = { ...updatedGroup, selectedTeams: [] };
 
-    return {
-      ...state,
-      selections: state.selections.map(s => s.id === state.currentSelectionId ? updatedGroup : s)
+      return {
+        ...state,
+        selections: updateSelections(updatedGroup, state),
+      };
     }
-  }),
+  ),
+  on(
+    SelectionsPageActions.addTeamsToSelectionByStars,
+    (state, action): SelectionsState => {
+      const teams = state.leagues.flatMap((l) =>
+        l.teams.filter((t) => t.stars >= action.stars)
+      );
+      let updatedGroup = state.selections.find(
+        (s) => s.id === state.currentSelectionId
+      )!;
+      updatedGroup = { ...updatedGroup, selectedTeams: teams };
+
+      return {
+        ...state,
+        selections: updateSelections(updatedGroup, state),
+      };
+    }
+  ),
+  on(
+    SelectionsPageActions.addBestTeamsFromEachLeagueToSelection,
+    (state): SelectionsState => {
+      const teams = state.leagues.flatMap((l) => [...l.teams].sort((a,b) => (a.stars > b.stars) ? -1 : ((b.stars > a.stars) ? 1 : 0)).slice(0, 5));
+      let updatedGroup = state.selections.find(
+        (s) => s.id === state.currentSelectionId
+      )!;
+      updatedGroup = { ...updatedGroup, selectedTeams: teams };
+
+      return {
+        ...state,
+        selections: updateSelections(updatedGroup, state),
+      };
+    }
+  ),
   on(
     SelectionsApiActions.loadSelectionsSuccess,
     (state, action): SelectionsState => {

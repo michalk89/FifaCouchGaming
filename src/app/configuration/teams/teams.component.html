@@ -1,23 +1,8 @@
 <div class="row m-2">
-  <div class="col-md-6 groups">
-    <app-section-header [title]="'Players'"></app-section-header>
-    <app-players-groups
-      [groups]="groups$ | async"
-      (deleteGroupEvent)="deleteGroup($event)"
-      (groupSelectedEvent)="setCurrentGroup($event)"
-      (createGroupEvent)="createGroup()"
-    ></app-players-groups>
-    <ng-container *ngIf="selectedGroup$ | async">
-      <app-players-group
-        [group]="selectedGroup$ | async"
-        [editMode]="editMode$ | async"
-        (toggleEditModeEvent)="toggleEditMode()"
-        (saveGroupEvent)="saveGroup($event)"
-      ></app-players-group>
-    </ng-container>
+  <div class="col-md-12">
+    <app-section-header [title]="'Teams'"></app-section-header>
   </div>
   <div class="col-md-6">
-    <app-section-header [title]="'Teams'"></app-section-header>
     <app-teams-selections
       [selections]="selections$ | async"
       (deleteSelectionEvent)="deleteSelection($event)"
@@ -25,11 +10,22 @@
       (createSelectionEvent)="createSelection($event)"
     ></app-teams-selections>
     <ng-container *ngIf="selectedSelection$ | async">
+        <app-teams-filters
+            (addAllTeamsEvent)="addAllTeamsToSelection()"
+            (removeAllTeamsEvent)="removeAllTeamsFromSelection()"
+            (addTeamsByStarsEvent)="addTeamsByStars($event)"
+            (addBestTeamsFromEachLeagueEvent)="addBestTeamsFromEachLeague()"
+        ></app-teams-filters>
+    </ng-container>
+  </div>
+  <div class="col-md-6">
+    <ng-container *ngIf="selectedSelection$ | async">
       <app-teams-selection
         [leagues]="leagues$ | async"
         [selectedTeams]="(selectedSelection$ | async)!.selectedTeams"
         (addTeamToCurrentSelectionEvent)="addTeamToSelection($event)"
         (deleteTeamFromCurrentSelectionEvent)="deleteTeamFromSelection($event)"
+        (addAllTeamsFromLeagueToSelectionEvent)="addAllTeamFromLeagueToSelection($event)"
       >
       </app-teams-selection>
     </ng-container>

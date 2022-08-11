@@ -18,6 +18,7 @@
                 [alt]="league.name"
               />
               {{ league.name }}
+              
             </button>
           </h2>
           <div
@@ -30,6 +31,7 @@
                 [league]="league"
                 [selectedTeams]="selectedTeams"
                 (addTeamToSelectionEvent)="addTeamToSelection($event)"
+                (addAllTeamsFromLeagueToSelectionEvent)="addAllTeamsFromLeague($event)"
               ></app-league>
             </div>
           </div>
@@ -38,20 +40,20 @@
     </div>
     <div class="col-md-6">
       <div
-      class="col-md-12 d-flex justify-content-between align-items-center my-2"
-      *ngFor="let team of selectedTeams"
-    >
-      <span
-        ><strong>{{ team.name }}</strong></span
+        class="col-md-12 d-flex justify-content-between align-items-center my-2"
+        *ngFor="let team of selectedTeams | sortTeams"
       >
-      <button
-        type="button"
-        class="btn btn-danger ms-2"
-        (click)="deleteTeamFromSelection(team)"
-      >
-        -
-      </button>
-    </div>
+        <span
+          ><strong>{{ team.name }}</strong></span
+        >
+        <button
+          type="button"
+          class="btn btn-danger ms-2"
+          (click)="deleteTeamFromSelection(team)"
+        >
+          -
+        </button>
+      </div>
     </div>
   </div>
 </div>

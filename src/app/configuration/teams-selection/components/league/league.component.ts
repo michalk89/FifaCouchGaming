@@ -12,6 +12,7 @@ export class LeagueComponent implements OnInit {
   @Input() league: LeagueModel;
   @Input() selectedTeams: TeamModel[];
   @Output() addTeamToSelectionEvent: EventEmitter<LeagueTeamModel> = new EventEmitter<LeagueTeamModel>();
+  @Output() addAllTeamsFromLeagueToSelectionEvent: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }
 
@@ -22,7 +23,11 @@ export class LeagueComponent implements OnInit {
     this.addTeamToSelectionEvent.emit({ leagueId, teamId});
   };
 
+  addAllTeamsFromLeague = (leagueId: number) => {
+    this.addAllTeamsFromLeagueToSelectionEvent.emit(leagueId);
+  };
+
   get selectableTeams() {
     return this.league.teams.filter(t => !this.selectedTeams.includes(t));
-  }
+  };
 }

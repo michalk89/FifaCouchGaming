@@ -1,0 +1,23 @@
+<div class="row m-2">
+  <div class="col-md-12">
+    <app-section-header [title]="'Players'"></app-section-header>
+  </div>
+  <div class="col-md-6 groups">
+    <app-players-groups
+      [groups]="groups$ | async"
+      (deleteGroupEvent)="deleteGroup($event)"
+      (groupSelectedEvent)="setCurrentGroup($event)"
+      (createGroupEvent)="createGroup()"
+    ></app-players-groups>
+  </div>
+  <div class="col-md-6">
+    <ng-container *ngIf="selectedGroup$ | async">
+      <app-players-group
+        [group]="selectedGroup$ | async"
+        [editMode]="editMode$ | async"
+        (toggleEditModeEvent)="toggleEditMode()"
+        (saveGroupEvent)="saveGroup($event)"
+      ></app-players-group>
+    </ng-container>
+  </div>
+</div>

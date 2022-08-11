@@ -40,4 +40,27 @@ export const addTeamToSelection = createAction(
 export const deleteTeamFromSelection = createAction(
   "[Selections] Delete Team From Selection",
   props<{ team: TeamModel }>()
-)
+);
+
+export const addAllTeamsFromLeagueToSelection = createAction(
+  "[Selections] Add All Teams From League To Selection",
+  props<{ leagueId: number }>()
+);
+
+export const addAllTeamsToSelection = createAction(
+  "[Selections] Add All Teams To Selection"
+);
+
+export const removeAllTeamsFromSelection = createAction(
+  "[Selections] Remove All Teams From Selection"
+);
+
+export const addTeamsToSelectionByStars = createAction(
+  "[Selections] Add Teams To Selection By Stars",
+  props<{ stars: number }>()
+);
+
+export const addBestTeamsFromEachLeagueToSelection = createAction(
+  "[Selections] Add Best Teams From Each League To Selection"
+);
+

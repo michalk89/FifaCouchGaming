@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayersGroupsComponent } from './players-groups/players-groups.component';
 import { PlayersGroupComponent } from './players-group/players-group.component';
-import { ConfigurationComponent } from './configuration/configuration.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { StoreModule } from '@ngrx/store';
@@ -19,22 +18,30 @@ import { TeamsCreateSelectionComponent } from './teams-selections/components/tea
 import { TeamsSelectionComponent } from './teams-selection/teams-selection.component';
 import { LeagueComponent } from './teams-selection/components/league/league.component';
 import { BarRatingModule } from 'ngx-bar-rating';
+import { PlayersComponent } from './players/players.component';
+import { TeamsComponent } from './teams/teams.component';
+import { TeamsFiltersComponent } from './teams-filters/teams-filters.component';
+import { SortTeamsPipe } from '../pipes/sort-teams.pipe';
 
 const configurationRoutes: Routes = [
-  { path: '', component: ConfigurationComponent }
+  { path: 'teams', component: TeamsComponent },
+  { path: 'players', component: PlayersComponent },
 ];
 
 @NgModule({
   declarations: [
     PlayersGroupsComponent,
     PlayersGroupComponent,
-    ConfigurationComponent,
     PlayersGroupViewComponent,
     PlayersGroupEditComponent,
     TeamsSelectionsComponent,
     TeamsCreateSelectionComponent,
     TeamsSelectionComponent,
-    LeagueComponent
+    LeagueComponent,
+    PlayersComponent,
+    TeamsComponent,
+    TeamsFiltersComponent,
+    SortTeamsPipe
   ],
   imports: [
     CommonModule,
