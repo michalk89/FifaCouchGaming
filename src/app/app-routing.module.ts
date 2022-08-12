@@ -21,6 +21,10 @@ const routes: Routes = [
         loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule)
       },
       {
+        path: 'schedule',
+        loadChildren: () => import('./schedule/schedule.module').then(m => m.ScheduleModule)
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'

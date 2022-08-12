@@ -436,10 +436,13 @@ export const selectionsReducer = createReducer<SelectionsState>(
   on(
     SelectionsPageActions.addAllTeamsFromLeagueToSelection,
     (state, action): SelectionsState => {
-      const teams = state.leagues.find((l) => l.id === action.leagueId)?.teams;
+      let teams = state.leagues.find((l) => l.id === action.leagueId)?.teams;
       let updatedGroup = state.selections.find(
         (s) => s.id === state.currentSelectionId
       )!;
+
+      teams = teams!.filter(x => ![...updatedGroup.selectedTeams].map(t => t.id).includes(x.id));
+
       updatedGroup = {
         ...updatedGroup,
         selectedTeams: [...updatedGroup.selectedTeams, ...(teams ?? [])],
