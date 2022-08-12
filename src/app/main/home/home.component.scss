@@ -30,6 +30,9 @@ img.tile {
     cursor: pointer;
     filter: grayscale(100%);
     -webkit-filter: grayscale(100%);
+    border: 2px solid white;
+    width: 100%;
+    height: 75%;
 
     &:hover {
         animation: toColor 0.5s;

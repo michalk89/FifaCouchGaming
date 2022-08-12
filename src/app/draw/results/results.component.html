@@ -1,8 +1,10 @@
-<app-section-header [title]="'Results'"></app-section-header>
-<div class="border border-dark border-2 rounded p-4 my-4 row">
+<div class="lay rounded p-4 my-4 row">
+  <div class="col-md-12 mb-4 text-center">
+    <strong>Options</strong>
+  </div>
   <ng-container *ngFor="let r of results">
     <div class="col-md-3">
-      <div class="d-flex flex-column justify-content-center align-items-center border border-dark border-2 rounded p-4 my-4">
+      <div class="d-flex flex-column justify-content-center align-items-center lay rounded p-2">
         <strong>{{ r.playerName }}</strong>
         <hr />
         <ul>

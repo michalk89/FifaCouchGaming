@@ -1,31 +1,35 @@
-<div class="row m-2">
+<div class="row m-2 lay">
   <div class="col-md-12">
     <app-section-header [title]="'Teams'"></app-section-header>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-9">
     <app-teams-selections
       [selections]="selections$ | async"
       (deleteSelectionEvent)="deleteSelection($event)"
       (selectionSelectedEvent)="setCurrentSelection($event)"
       (createSelectionEvent)="createSelection($event)"
     ></app-teams-selections>
+  </div>
+  <div class="col-md-3">
     <ng-container *ngIf="selectedSelection$ | async">
-        <app-teams-filters
-            (addAllTeamsEvent)="addAllTeamsToSelection()"
-            (removeAllTeamsEvent)="removeAllTeamsFromSelection()"
-            (addTeamsByStarsEvent)="addTeamsByStars($event)"
-            (addBestTeamsFromEachLeagueEvent)="addBestTeamsFromEachLeague()"
-        ></app-teams-filters>
+      <app-teams-filters
+        (addAllTeamsEvent)="addAllTeamsToSelection()"
+        (removeAllTeamsEvent)="removeAllTeamsFromSelection()"
+        (addTeamsByStarsEvent)="addTeamsByStars($event)"
+        (addBestTeamsFromEachLeagueEvent)="addBestTeamsFromEachLeague()"
+      ></app-teams-filters>
     </ng-container>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-12">
     <ng-container *ngIf="selectedSelection$ | async">
       <app-teams-selection
         [leagues]="leagues$ | async"
         [selectedTeams]="(selectedSelection$ | async)!.selectedTeams"
         (addTeamToCurrentSelectionEvent)="addTeamToSelection($event)"
         (deleteTeamFromCurrentSelectionEvent)="deleteTeamFromSelection($event)"
-        (addAllTeamsFromLeagueToSelectionEvent)="addAllTeamFromLeagueToSelection($event)"
+        (addAllTeamsFromLeagueToSelectionEvent)="
+          addAllTeamFromLeagueToSelection($event)
+        "
       >
       </app-teams-selection>
     </ng-container>

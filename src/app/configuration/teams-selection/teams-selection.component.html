@@ -1,6 +1,6 @@
-<div class="border border-dark border-2 rounded p-4 my-4">
+<div class="rounded p-4 my-4 lay">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-3">
       <div class="accordion" id="accordionLeaguesPanels">
         <div class="accordion-item" *ngFor="let league of leagues">
           <h2 class="accordion-header">
@@ -18,7 +18,6 @@
                 [alt]="league.name"
               />
               {{ league.name }}
-              
             </button>
           </h2>
           <div
@@ -31,28 +30,32 @@
                 [league]="league"
                 [selectedTeams]="selectedTeams"
                 (addTeamToSelectionEvent)="addTeamToSelection($event)"
-                (addAllTeamsFromLeagueToSelectionEvent)="addAllTeamsFromLeague($event)"
+                (addAllTeamsFromLeagueToSelectionEvent)="
+                  addAllTeamsFromLeague($event)
+                "
               ></app-league>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div
-        class="col-md-12 d-flex justify-content-between align-items-center my-2"
-        *ngFor="let team of selectedTeams | sortTeams"
-      >
-        <span
-          ><strong>{{ team.name }}</strong></span
+    <div class="col-md-9">
+      <div class="row">
+        <div
+          class="col-md-3 d-flex justify-content-between align-items-center my-2"
+          *ngFor="let team of selectedTeams | sortTeams"
         >
-        <button
-          type="button"
-          class="btn btn-danger ms-2"
-          (click)="deleteTeamFromSelection(team)"
-        >
-          -
-        </button>
+          <span
+            ><strong>{{ team.name }}</strong></span
+          >
+          <button
+            type="button"
+            class="btn app-btn-secondary ms-2"
+            (click)="deleteTeamFromSelection(team)"
+          >
+            -
+          </button>
+        </div>
       </div>
     </div>
   </div>

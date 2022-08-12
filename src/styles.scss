@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+$black: #000000;
+$dark-blue: #14213D;
+$yellow: #FCA311;
+$gray: #AAAAAA;
+$white: #FFFFFF;
+
+body {
+    background-color: $dark-blue;
+    color: $white;
+}
+
+.app-btn-primary {
+    background-color: $yellow;
+    color: $black;
+}
+
+.app-btn-secondary {
+    background-color: $gray;
+    color: $black;
+}
+
+.lay {
+    border: 2px solid white
+}
+
+tr {
+    cursor: pointer !important;
+}
+
+table {
+    color: white !important
+}

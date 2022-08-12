@@ -1,5 +1,6 @@
-<div class="border border-dark border-2 rounded p-4 my-4">
+<div class="lay rounded p-2">
   <ng-container *ngIf="selectedSelection">
+    <div class="text-center"><strong>Teams:</strong></div>
     <ul>
       <li *ngFor="let team of selectedSelection.selectedTeams">{{ team.name }}</li>
     </ul>

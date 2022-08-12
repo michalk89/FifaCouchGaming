@@ -15,7 +15,13 @@ const initialState: SelectionsState = {
     {
       id: 1,
       name: "Test #1",
-      selectedTeams: [],
+      selectedTeams: [
+        {
+          id: 1,
+          name: "Almeria",
+          stars: 3,
+        },
+      ],
     },
     {
       id: 2,
