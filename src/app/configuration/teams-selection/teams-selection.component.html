@@ -1,62 +1,41 @@
 <div class="rounded p-4 my-4 lay">
   <div class="row">
-    <div class="col-md-3">
-      <div class="accordion" id="accordionLeaguesPanels">
-        <div class="accordion-item" *ngFor="let league of leagues">
-          <h2 class="accordion-header">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              [attr.data-bs-target]="'#' + league.accordionId"
-              aria-expanded="false"
-              [attr.aria-controls]="league.accordionId"
-            >
-              <img
-                class="img-fluid rounded"
-                [src]="league.flagUrl"
-                [alt]="league.name"
-              />
-              {{ league.name }}
-            </button>
-          </h2>
-          <div
-            [id]="league.accordionId"
-            class="accordion-collapse collapse"
-            data-bs-parent="#accordionLeaguesPanels"
-          >
-            <div class="accordion-body">
-              <app-league
-                [league]="league"
-                [selectedTeams]="selectedTeams"
-                (addTeamToSelectionEvent)="addTeamToSelection($event)"
-                (addAllTeamsFromLeagueToSelectionEvent)="
-                  addAllTeamsFromLeague($event)
-                "
-              ></app-league>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-9">
+    <div class="col-md-12">
       <div class="row">
-        <div
-          class="col-md-3 d-flex justify-content-between align-items-center my-2"
-          *ngFor="let team of selectedTeams | sortTeams"
-        >
-          <span
-            ><strong>{{ team.name }}</strong></span
-          >
+        <div class="col-md-3" *ngFor="let league of leagues">
           <button
             type="button"
-            class="btn app-btn-secondary ms-2"
-            (click)="deleteTeamFromSelection(team)"
+            class="rounded w-100 p-2 my-1"
+            [ngClass]="selectedLeague === league ? 'app-btn-primary' : 'app-btn-secondary'"
+            (click)="setSelectedLeague(league)"
           >
-            -
+            <img
+              class="img-fluid rounded"
+              [src]="league.flagUrl"
+              [alt]="league.name"
+            />
+            {{ league.name }}
           </button>
         </div>
       </div>
+    </div>
+    <div class="col-md-12" *ngIf="selectedLeague">
+      <app-league
+        [league]="selectedLeague"
+        [selectedTeams]="selectedTeams"
+        (addTeamToSelectionEvent)="addTeamToSelection($event)"
+        (addAllTeamsFromLeagueToSelectionEvent)="addAllTeamsFromLeague($event)"
+      ></app-league>
+    </div>
+  </div>
+</div>
+<div class="rounded p-4 my-4 lay" *ngIf="selectedTeams.length > 0">
+  <div class="row">
+    <div class="col-md-12">
+      <app-selection
+        [selectedTeams]="selectedTeams"
+        (deleteTeamFromSelectionEvent)="deleteTeamFromSelection($event)"
+      ></app-selection>
     </div>
   </div>
 </div>

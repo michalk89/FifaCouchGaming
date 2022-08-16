@@ -22,6 +22,7 @@ import { PlayersComponent } from './players/players.component';
 import { TeamsComponent } from './teams/teams.component';
 import { TeamsFiltersComponent } from './teams-filters/teams-filters.component';
 import { SortTeamsPipe } from '../pipes/sort-teams.pipe';
+import { SelectionComponent } from './teams-selection/components/selection/selection.component';
 
 const configurationRoutes: Routes = [
   { path: 'teams', component: TeamsComponent },
@@ -41,7 +42,8 @@ const configurationRoutes: Routes = [
     PlayersComponent,
     TeamsComponent,
     TeamsFiltersComponent,
-    SortTeamsPipe
+    SortTeamsPipe,
+    SelectionComponent
   ],
   imports: [
     CommonModule,

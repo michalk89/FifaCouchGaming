@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DrawOptionsModel } from "src/app/models/draw-options.model";
 import { GroupModel } from "src/app/models/group.model";
-import { ResultItemModel } from "src/app/models/result-item.model";
+import { DrawResultItemModel } from "src/app/models/draw-result-item.model";
 import { SelectionModel } from "src/app/models/selection.model";
 import { TeamModel } from "src/app/models/team.model";
 
@@ -14,9 +14,9 @@ import { TeamModel } from "src/app/models/team.model";
 export class DrawOptionsComponent implements OnInit {
   @Input() selections: SelectionModel[] | null;
   @Input() groups: GroupModel[] | null;
-  @Input() results: ResultItemModel[];
-  @Output() resultsDrawnEvent: EventEmitter<ResultItemModel[]> =
-    new EventEmitter<ResultItemModel[]>();
+  @Input() results: DrawResultItemModel[];
+  @Output() resultsDrawnEvent: EventEmitter<DrawResultItemModel[]> =
+    new EventEmitter<DrawResultItemModel[]>();
 
   optionsForm: FormGroup;
 
@@ -55,7 +55,7 @@ export class DrawOptionsComponent implements OnInit {
         ?.selectedTeams ?? [];
 
     if (players?.length > 0 && teams?.length > 0) {
-      const results: ResultItemModel[] = players.map((p) => {
+      const results: DrawResultItemModel[] = players.map((p) => {
         return {
           playerName: p.name,
           drawnTeams: [],

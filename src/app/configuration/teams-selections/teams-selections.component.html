@@ -3,7 +3,11 @@
     <span class="">
       <strong> Selections </strong>
     </span>
-    <button type="button" class="btn app-btn-primary" (click)="showCreateSelection()">
+    <button
+      type="button"
+      class="btn app-btn-primary"
+      (click)="showCreateSelection()"
+    >
       Add selection
     </button>
   </div>
@@ -18,10 +22,12 @@
     </thead>
     <tbody>
       <tr
+        class="align-middle"
+        [class.row-active]="selection.id === activeRowId"
         *ngFor="let selection of selections"
         (click)="rowSelected(selection.id)"
       >
-        <th scope="row">{{ selection.id }}</th>
+        <td>{{ selection.id }}</td>
         <td>{{ selection.name }}</td>
         <td>{{ selection.selectedTeams.length }}</td>
         <td>

@@ -1,0 +1,8 @@
+<div class="p-2">
+    <ng-container *ngIf="selectedGroup">
+      <ol class="mt-2">
+        <li *ngFor="let player of selectedGroup.players">{{ player.name }}</li>
+      </ol>
+    </ng-container>
+  </div>
+  

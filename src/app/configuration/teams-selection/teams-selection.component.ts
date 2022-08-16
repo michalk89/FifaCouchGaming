@@ -14,13 +14,17 @@ export class TeamsSelectionComponent implements OnInit {
   @Output() addTeamToCurrentSelectionEvent: EventEmitter<LeagueTeamModel> = new EventEmitter<LeagueTeamModel>();
   @Output() addAllTeamsFromLeagueToSelectionEvent: EventEmitter<number> = new EventEmitter<number>();
   @Output() deleteTeamFromCurrentSelectionEvent: EventEmitter<TeamModel> = new EventEmitter<TeamModel>();
-
+  selectedLeague: LeagueModel;
 
   constructor() {}
 
   ngOnInit(): void {
 
   }
+
+  setSelectedLeague = (league: LeagueModel) => {
+    this.selectedLeague =  league;
+  };
 
   addTeamToSelection = (data: LeagueTeamModel) => {
     this.addTeamToCurrentSelectionEvent.emit(data);

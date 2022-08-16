@@ -1,1 +1,17 @@
-<p>schedule works!</p>
+<div class="row m-2">
+  <div class="col-md-12">
+    <app-section-header [title]="'Schedule'"></app-section-header>
+  </div>
+  <div class="col-md-3">
+    <app-schedule-options
+      [groups]="groups$ | async"
+      (scheduleResultsGeneratedEvent)="setResults($event)"
+    ></app-schedule-options>
+  </div>
+  <div class="col-md-9">
+    <ng-container *ngIf="drawResults && drawResults.length > 0">
+      <app-schedule-results [results]="drawResults"></app-schedule-results>
+      SCHEDULE
+    </ng-container>
+  </div>
+</div>

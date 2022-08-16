@@ -1,0 +1,65 @@
+<form novalidate (ngSubmit)="setScheduleOptions()" [formGroup]="optionsForm">
+  <div class="lay rounded p-4 my-4">
+    <div class="row">
+      <div class="col-md-12 mb-4 text-center">
+        <strong>Options</strong>
+      </div>
+      <div class="col-md-12" *ngIf="groups">
+        <label for="playersGroups" class="form-label"
+          >Select players group</label
+        >
+        <select
+          class="form-select mb-3"
+          id="playersGroups"
+          formControlName="playersGroups"
+        >
+          <option value="null">Select...</option>
+          <option *ngFor="let g of groups" [value]="g.id">
+            {{ g.name }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-12 my-2" *ngIf="groupIdControl.value !== 'null'">
+        <app-schedule-players-preview
+          [groups]="groups"
+          [groupId]="groupIdControl.value"
+        ></app-schedule-players-preview>
+      </div>
+      <div class="col-md-12">
+        <label for="gameplayType" class="form-label"
+          >Select gameplay type</label
+        >
+        <select
+          class="form-select mb-3"
+          id="gameplayType"
+          formControlName="gameplayType"
+        >
+          <option value="null">Select...</option>
+          <option value="0">Single</option>
+          <option value="1">Pairs</option>
+        </select>
+      </div>
+      <div class="col-md-12">
+        <label for="withRematches" class="form-label">With rematches?</label>
+        <select
+          class="form-select mb-3"
+          id="withRematches"
+          formControlName="withRematches"
+        >
+          <option value="null">Select...</option>
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+      <div class="col-md-12 d-flex justify-content-center">
+        <button
+          type="submit"
+          class="btn app-btn-primary btn-lg my-5"
+          [disabled]="!submitBtnEnabled"
+        >
+          GENERATE SCHEDULE
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

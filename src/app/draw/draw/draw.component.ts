@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { GroupModel } from 'src/app/models/group.model';
-import { ResultItemModel } from 'src/app/models/result-item.model';
+import { DrawResultItemModel } from 'src/app/models/draw-result-item.model';
 import { SelectionModel } from 'src/app/models/selection.model';
 import { State } from 'src/app/state/app.state';
 import { getGroups } from 'src/app/state/groups';
@@ -16,7 +16,7 @@ import { getSelections } from 'src/app/state/selections';
 export class DrawComponent implements OnInit {
   selections$: Observable<SelectionModel[]>;
   groups$: Observable<GroupModel[]>;
-  drawResults: ResultItemModel[] = [];
+  drawResults: DrawResultItemModel[] = [];
   
   constructor(private store: Store<State>) { }
 
@@ -25,7 +25,7 @@ export class DrawComponent implements OnInit {
     this.selections$ = this.store.select(getSelections);
   }
 
-  setResults = (data: ResultItemModel[]) => {
+  setResults = (data: DrawResultItemModel[]) => {
     this.drawResults = data;
   };
 }

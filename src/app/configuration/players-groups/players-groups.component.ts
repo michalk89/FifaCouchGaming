@@ -11,6 +11,7 @@ export class PlayersGroupsComponent implements OnInit {
   @Output() deleteGroupEvent: EventEmitter<number> = new EventEmitter<number>();
   @Output() groupSelectedEvent: EventEmitter<number> = new EventEmitter<number>();
   @Output() createGroupEvent: EventEmitter<void> = new EventEmitter<void>();
+  activeRowId: number = 0;
 
   constructor() { }
 
@@ -22,6 +23,7 @@ export class PlayersGroupsComponent implements OnInit {
   };
 
   rowSelected = (id: number) => {
+    this.activeRowId = id;
     this.groupSelectedEvent.emit(id);
   };
 

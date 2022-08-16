@@ -15,13 +15,7 @@ const initialState: SelectionsState = {
     {
       id: 1,
       name: "Test #1",
-      selectedTeams: [
-        {
-          id: 1,
-          name: "Almeria",
-          stars: 3,
-        },
-      ],
+      selectedTeams: [],
     },
     {
       id: 2,
@@ -34,7 +28,6 @@ const initialState: SelectionsState = {
       id: 1,
       name: "Primera Division",
       flagUrl: "/assets/spain.png",
-      accordionId: "primeraDivision",
       teams: [
         {
           id: 1,
@@ -142,7 +135,6 @@ const initialState: SelectionsState = {
       id: 2,
       name: "Premier League",
       flagUrl: "/assets/england.png",
-      accordionId: "premierLeague",
       teams: [
         {
           id: 21,
@@ -250,7 +242,6 @@ const initialState: SelectionsState = {
       id: 3,
       name: "Serie A",
       flagUrl: "/assets/italy.png",
-      accordionId: "serieA",
       teams: [
         {
           id: 41,
@@ -354,6 +345,36 @@ const initialState: SelectionsState = {
         },
       ],
     },
+    {
+      id: 4,
+      name: "Ligue 1",
+      flagUrl: "/assets/france.png",
+      teams: []
+    },
+    {
+      id: 5,
+      name: "Bundesliga",
+      flagUrl: "/assets/germany.png",
+      teams: []
+    },
+    {
+      id: 6,
+      name: "Primeira Liga",
+      flagUrl: "/assets/portugal.png",
+      teams: []
+    },
+    {
+      id: 7,
+      name: "Eredivisie",
+      flagUrl: "/assets/netherlands.png",
+      teams: []
+    },
+    {
+      id: 8,
+      name: "Ekstraklasa",
+      flagUrl: "/assets/poland.png",
+      teams: []
+    },
   ],
   currentSelectionId: null,
   error: "",
@@ -441,7 +462,9 @@ export const selectionsReducer = createReducer<SelectionsState>(
         (s) => s.id === state.currentSelectionId
       )!;
 
-      teams = teams!.filter(x => ![...updatedGroup.selectedTeams].map(t => t.id).includes(x.id));
+      teams = teams!.filter(
+        (x) => ![...updatedGroup.selectedTeams].map((t) => t.id).includes(x.id)
+      );
 
       updatedGroup = {
         ...updatedGroup,
@@ -500,7 +523,11 @@ export const selectionsReducer = createReducer<SelectionsState>(
   on(
     SelectionsPageActions.addBestTeamsFromEachLeagueToSelection,
     (state): SelectionsState => {
-      const teams = state.leagues.flatMap((l) => [...l.teams].sort((a,b) => (a.stars > b.stars) ? -1 : ((b.stars > a.stars) ? 1 : 0)).slice(0, 5));
+      const teams = state.leagues.flatMap((l) =>
+        [...l.teams]
+          .sort((a, b) => (a.stars > b.stars ? -1 : b.stars > a.stars ? 1 : 0))
+          .slice(0, 5)
+      );
       let updatedGroup = state.selections.find(
         (s) => s.id === state.currentSelectionId
       )!;

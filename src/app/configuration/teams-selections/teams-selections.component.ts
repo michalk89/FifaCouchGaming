@@ -12,6 +12,7 @@ export class TeamsSelectionsComponent implements OnInit {
   @Output() selectionSelectedEvent: EventEmitter<number> = new EventEmitter<number>();
   @Output() createSelectionEvent: EventEmitter<SelectionModel> = new EventEmitter<SelectionModel>();
 
+  activeRowId: number = 0;
   showCreateSelectionComponent: boolean = false;
 
   constructor() { }
@@ -24,6 +25,7 @@ export class TeamsSelectionsComponent implements OnInit {
   };
 
   rowSelected = (id: number) => {
+    this.activeRowId = id;
     this.selectionSelectedEvent.emit(id);
   };
 

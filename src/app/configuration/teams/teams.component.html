@@ -2,15 +2,13 @@
   <div class="col-md-12">
     <app-section-header [title]="'Teams'"></app-section-header>
   </div>
-  <div class="col-md-9">
+  <div class="col-md-4">
     <app-teams-selections
       [selections]="selections$ | async"
       (deleteSelectionEvent)="deleteSelection($event)"
       (selectionSelectedEvent)="setCurrentSelection($event)"
       (createSelectionEvent)="createSelection($event)"
     ></app-teams-selections>
-  </div>
-  <div class="col-md-3">
     <ng-container *ngIf="selectedSelection$ | async">
       <app-teams-filters
         (addAllTeamsEvent)="addAllTeamsToSelection()"
@@ -20,7 +18,7 @@
       ></app-teams-filters>
     </ng-container>
   </div>
-  <div class="col-md-12">
+  <div class="col-md-8">
     <ng-container *ngIf="selectedSelection$ | async">
       <app-teams-selection
         [leagues]="leagues$ | async"

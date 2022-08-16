@@ -3,7 +3,9 @@
     <span class="">
       <strong> Groups </strong>
     </span>
-    <button type="button" class="btn app-btn-primary" (click)="addGroup()">Add group</button>
+    <button type="button" class="btn app-btn-primary" (click)="addGroup()">
+      Add group
+    </button>
   </div>
   <table class="table">
     <thead>
@@ -15,12 +17,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let group of groups" (click)="rowSelected(group.id)">
+      <tr
+        *ngFor="let group of groups"
+        (click)="rowSelected(group.id)"
+        class="align-middle"
+        [class.row-active]="group.id === activeRowId"
+      >
         <th scope="row">{{ group.id }}</th>
         <td>{{ group.name }}</td>
         <td>{{ group.players.length }}</td>
         <td>
-          <button type="button" class="btn app-btn-secondary mx-1" (click)="deleteGroup(group.id)">Delete</button>
+          <button
+            type="button"
+            class="btn app-btn-secondary mx-1"
+            (click)="deleteGroup(group.id)"
+          >
+            Delete
+          </button>
         </td>
       </tr>
     </tbody>

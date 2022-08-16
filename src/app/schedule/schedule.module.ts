@@ -10,6 +10,9 @@ import { GroupsEffects } from '../state/groups/groups.effects';
 import { SelectionsEffects } from '../state/selections/selections.effects';
 import { groupsReducer } from '../state/groups/groups.reducer';
 import { selectionsReducer } from '../state/selections/selections.reducer';
+import { ScheduleOptionsComponent } from './schedule/components/schedule-options/schedule-options.component';
+import { SchedulePlayersPreviewComponent } from './schedule/components/schedule-players-preview/schedule-players-preview.component';
+import { ScheduleResultsComponent } from './schedule/components/schedule-results/schedule-results.component';
 
 const scheduleRoutes: Routes = [
   { path: '', component: ScheduleComponent }
@@ -17,7 +20,10 @@ const scheduleRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    ScheduleComponent
+    ScheduleComponent,
+    ScheduleOptionsComponent,
+    SchedulePlayersPreviewComponent,
+    ScheduleResultsComponent
   ],
   imports: [
     CommonModule,
