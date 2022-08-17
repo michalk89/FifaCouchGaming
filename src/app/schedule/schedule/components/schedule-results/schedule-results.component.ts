@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ScheduleResultItemModel } from 'src/app/models/schedule-result-item.model';
+import { ScheduleResultModel } from 'src/app/models/schedule-result.model';
 
 @Component({
   selector: 'app-schedule-results',
@@ -7,7 +7,7 @@ import { ScheduleResultItemModel } from 'src/app/models/schedule-result-item.mod
   styleUrls: ['./schedule-results.component.scss']
 })
 export class ScheduleResultsComponent implements OnInit {
-  @Input() results: ScheduleResultItemModel[];
+  @Input() data: ScheduleResultModel;
 
   constructor() { }
 

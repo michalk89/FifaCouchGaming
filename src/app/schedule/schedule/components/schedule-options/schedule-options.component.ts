@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { GroupModel } from "src/app/models/group.model";
-import { DrawResultItemModel } from "src/app/models/draw-result-item.model";
 import { ScheduleOptionsModel } from "src/app/models/schedule-options.model";
 import { ScheduleResultItemModel } from "src/app/models/schedule-result-item.model";
 import { ScheduleGameplayTypeEnum } from "src/app/enums/schedule-gameplay-type.enum";
 import { PlayerModel } from "src/app/models/player.model";
+import { ScheduleResultModel } from "src/app/models/schedule-result.model";
+import { TeamPairPlayersModel } from "src/app/models/team-pair-players.model";
+
 
 @Component({
   selector: "app-schedule-options",
@@ -16,8 +18,8 @@ export class ScheduleOptionsComponent implements OnInit {
   @Input() groups: GroupModel[] | null;
   @Input() results: ScheduleResultItemModel[];
   @Output() scheduleResultsGeneratedEvent: EventEmitter<
-    ScheduleResultItemModel[]
-  > = new EventEmitter<ScheduleResultItemModel[]>();
+    ScheduleResultModel
+  > = new EventEmitter<ScheduleResultModel>();
 
   optionsForm: FormGroup;
 
@@ -55,24 +57,27 @@ export class ScheduleOptionsComponent implements OnInit {
         ? this.generateScheduleForSingles(options, players)
         : this.generateScheduleForPairs(options, players);
 
-    this.scheduleResultsGeneratedEvent.emit(results);
+    const data: ScheduleResultModel = {
+      results,
+      type: options.gameplayType
+    };
+
+    this.scheduleResultsGeneratedEvent.emit(data);
   };
 
   generateScheduleForSingles = (
     options: ScheduleOptionsModel,
     players: PlayerModel[]
   ): ScheduleResultItemModel[] => {
-    //const playerNames = players.map(p => p.name);
-    const playerNames = ["a", "b", "c", "d", "e"];
-
+    const playerNames = players.map((p) => p.name);
     // generate schedule items array
     // then shuffle it
     const results: ScheduleResultItemModel[] = playerNames
-      .flatMap((p1, index) =>
-        playerNames.slice(index + 1).map((p2) => {
+      .flatMap((player1, index) =>
+        playerNames.slice(index + 1).map((player2) => {
           return {
-            home: p1,
-            away: p2,
+            home: player1,
+            away: player2,
           };
         })
       )
@@ -85,15 +90,66 @@ export class ScheduleOptionsComponent implements OnInit {
     options: ScheduleOptionsModel,
     players: PlayerModel[]
   ): ScheduleResultItemModel[] => {
-    return [];
+    const playerNames = players.map((p) => p.name);
+
+    const pairs: TeamPairPlayersModel[] = playerNames.flatMap(
+      (player1, index) =>
+        playerNames.slice(index + 1).map((player2) => {
+          return {
+            player1,
+            player2,
+          };
+        })
+    );
+
+    const matches = pairs.flatMap((team1, index) =>
+      pairs.slice(index + 1).map((team2) => {
+        return {
+          home: {
+            p1: team1.player1,
+            p2: team1.player2,
+          },
+          away: {
+            p1: team2.player1,
+            p2: team2.player2,
+          },
+        };
+      })
+      .filter(m => m.home.p1 !== m.away.p1 && m.home.p1 !== m.away.p2 && m.home.p2 !== m.away.p1 && m.home.p2 !== m.away.p2)
+    );
+
+    const results: ScheduleResultItemModel[] = matches
+      .map(m => {
+        return {
+          home: `${m.home.p1} & ${m.home.p2}`,
+          away: `${m.away.p1} & ${m.away.p2}`
+        }
+      })
+      .sort(() => Math.random() - 0.5);
+
+    return options.withRematches ? this.generateRematches(results) : results;
   };
 
-  generateRematches = (schedule: ScheduleResultItemModel[]): ScheduleResultItemModel[] => {
-    const rematches = schedule.map(item => {
+  checkIfTeamPlayersAreUnique = (
+    team1: TeamPairPlayersModel,
+    team2: TeamPairPlayersModel
+  ): boolean => {
+    return (
+      team1.player1 !== team2.player1 &&
+      team1.player1 !== team2.player2 &&
+      team1.player2 !== team2.player1 &&
+      team1.player2 !== team2.player2
+    );
+  };
+
+  generateRematches = (
+    schedule: ScheduleResultItemModel[]
+  ): ScheduleResultItemModel[] => {
+    const rematches = schedule.map((item) => {
       return {
         home: item.away,
-        away: item.home
-      }
+        away: item.home,
+      };
     });
 
     return [...schedule, ...rematches];
@@ -101,15 +157,15 @@ export class ScheduleOptionsComponent implements OnInit {
 
   get groupIdControl() {
     return this.optionsForm.controls["playersGroups"];
-  }
+  };
 
   get gameplayTypeControl() {
     return this.optionsForm.controls["gameplayType"];
-  }
+  };
 
   get withRematchesControl() {
     return this.optionsForm.controls["withRematches"];
-  }
+  };
 
   get submitBtnEnabled() {
     return (
@@ -120,5 +176,5 @@ export class ScheduleOptionsComponent implements OnInit {
       this.gameplayTypeControl.valid &&
       this.gameplayTypeControl.value !== "null"
     );
-  }
+  };
 }

@@ -1,1 +1,45 @@
-<p>schedule-results works!</p>
+<div class="lay rounded p-4 my-4 row">
+  <div class="col-md-12 mb-4 text-center">
+    <strong>Results</strong>
+  </div>
+  <ng-container *ngFor="let r of data.results; let i = index">
+    <ng-container *ngIf="data.type === 0">
+        <div class="col-md-6">
+            <div
+              class="result-item d-flex flex-column justify-content-center align-items-center lay rounded p-2 mb-4"
+            >
+                  <div class="lp">{{ i + 1 }}</div>
+                  <div class="result w-100">
+                      <div class="d-flex flex-row justify-content-between w-100">
+                          <div class="mx-2">
+                            <strong>{{ r.home }} </strong> 
+                          </div>
+                          <div class="mx-2">
+                            <strong> {{ r.away }}</strong>
+                          </div>   
+                      </div>
+                  </div>  
+            </div>
+          </div>
+    </ng-container>
+    <ng-container *ngIf="data.type === 1">
+        <div class="col-md-12">
+            <div
+              class="result-item d-flex flex-column justify-content-center align-items-center lay rounded p-2 mb-4"
+            >
+                  <div class="lp">{{ i + 1 }}</div>
+                  <div class="result w-100">
+                    <div class="d-flex flex-row justify-content-between w-100">
+                        <div class="mx-2">
+                          <strong>{{ r.home }} </strong> 
+                        </div>
+                        <div class="mx-2">
+                          <strong> {{ r.away }}</strong>
+                        </div>   
+                    </div>
+                </div>  
+            </div>
+          </div>
+    </ng-container>
+  </ng-container>
+</div>

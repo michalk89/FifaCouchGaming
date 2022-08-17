@@ -6,7 +6,7 @@ import { SelectionModel } from 'src/app/models/selection.model';
 import { State } from 'src/app/state/app.state';
 import { getGroups } from 'src/app/state/groups';
 import { getSelections } from 'src/app/state/selections';
-import { ScheduleResultItemModel } from 'src/app/models/schedule-result-item.model';
+import { ScheduleResultModel } from 'src/app/models/schedule-result.model';
 
 @Component({
   selector: 'app-schedule',
@@ -16,7 +16,7 @@ import { ScheduleResultItemModel } from 'src/app/models/schedule-result-item.mod
 export class ScheduleComponent implements OnInit {
   selections$: Observable<SelectionModel[]>;
   groups$: Observable<GroupModel[]>;
-  drawResults: ScheduleResultItemModel[] = [];
+  scheduleResults: ScheduleResultModel;
   
   constructor(private store: Store<State>) { }
 
@@ -25,7 +25,7 @@ export class ScheduleComponent implements OnInit {
     this.selections$ = this.store.select(getSelections);
   }
 
-  setResults = (data: ScheduleResultItemModel[]) => {
-    this.drawResults = data;
+  setResults = (data: ScheduleResultModel) => {
+    this.scheduleResults = data;
   };
 }

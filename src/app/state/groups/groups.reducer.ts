@@ -22,6 +22,18 @@ const initialState: GroupsState = {
         id: 2,
         name: "QuickerGirl",
       },
+      {
+        id: 3,
+        name: "QuickerBoy2",
+      },
+      {
+        id: 4,
+        name: "QuickerGirl2",
+      },
+      {
+        id: 5,
+        name: "WakandaForever",
+      },
     ],
   },
   {
