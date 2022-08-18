@@ -5,6 +5,7 @@ import { GroupModel } from "src/app/models/group.model";
 import { DrawResultItemModel } from "src/app/models/draw-result-item.model";
 import { SelectionModel } from "src/app/models/selection.model";
 import { TeamModel } from "src/app/models/team.model";
+import { DrawState } from "src/app/state/draw/draw.reducer";
 
 @Component({
   selector: "app-draw-options",
@@ -12,23 +13,31 @@ import { TeamModel } from "src/app/models/team.model";
   styleUrls: ["./draw-options.component.scss"],
 })
 export class DrawOptionsComponent implements OnInit {
+  @Input() currentDraw: DrawState | null;
   @Input() selections: SelectionModel[] | null;
   @Input() groups: GroupModel[] | null;
   @Input() results: DrawResultItemModel[];
   @Output() resultsDrawnEvent: EventEmitter<DrawResultItemModel[]> =
     new EventEmitter<DrawResultItemModel[]>();
+  @Output() drawCompletedEvent: EventEmitter<DrawState> = new EventEmitter<DrawState>();
 
   optionsForm: FormGroup;
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    const drawExists = this.currentDraw?.options && this.currentDraw?.results?.length > 0;
+
     this.optionsForm = this.fb.group({
-      playersGroups: ["null", Validators.required],
-      teamsSelections: ["null", Validators.required],
-      teamsPerPlayer: ["null", Validators.required],
-      canRepeat: ["null", Validators.required],
+      playersGroups: [drawExists ? this.currentDraw?.options?.groupId  : "null", Validators.required],
+      teamsSelections: [drawExists ? this.currentDraw?.options?.selectionId : "null", Validators.required],
+      teamsPerPlayer: [drawExists ? this.currentDraw?.options?.teamsPerPlayer : "null", Validators.required],
+      canRepeat: [drawExists ? this.currentDraw?.options?.canTeamsRepeat : "null", Validators.required],
     });
+
+    if(drawExists) {
+      this.resultsDrawnEvent.emit(this.currentDraw?.results);
+    }
   }
 
   setDrawOptions = () => {
@@ -75,6 +84,10 @@ export class DrawOptionsComponent implements OnInit {
       }
 
       this.resultsDrawnEvent.emit(results);
+      this.drawCompletedEvent.emit({
+        options,
+        results
+      });
     }
   };
 

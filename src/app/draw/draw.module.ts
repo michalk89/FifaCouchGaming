@@ -14,6 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DrawPlayersPreviewComponent } from './draw-options/components/draw-players-preview/draw-players-preview.component';
 import { DrawTeamsPreviewComponent } from './draw-options/components/draw-teams-preview/draw-teams-preview.component';
 import { DrawResultsComponent } from './draw-results/draw-results.component';
+import { drawReducer } from '../state/draw/draw.reducer';
+import { DrawEffects } from '../state/draw/draw.effects';
 
 const drawRoutes: Routes = [
   { path: '', component: DrawComponent }
@@ -34,7 +36,8 @@ const drawRoutes: Routes = [
     RouterModule.forChild(drawRoutes),
     StoreModule.forFeature('groups', groupsReducer),
     StoreModule.forFeature('selections', selectionsReducer),
-    EffectsModule.forFeature([GroupsEffects, SelectionsEffects]),
+    StoreModule.forFeature('draw', drawReducer),
+    EffectsModule.forFeature([GroupsEffects, SelectionsEffects, DrawEffects]),
   ]
 })
 export class DrawModule { }

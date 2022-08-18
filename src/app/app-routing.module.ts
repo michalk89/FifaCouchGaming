@@ -25,6 +25,10 @@ const routes: Routes = [
         loadChildren: () => import('./schedule/schedule.module').then(m => m.ScheduleModule)
       },
       {
+        path: 'tournament',
+        loadChildren: () => import('./tournament/tournament.module').then(m => m.TournamentModule)
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'

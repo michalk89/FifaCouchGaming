@@ -6,7 +6,9 @@
     <app-draw-options
       [groups]="groups$ | async"
       [selections]="selections$ | async"
+      [currentDraw]="draw$ | async"
       (resultsDrawnEvent)="setResults($event)"
+      (drawCompletedEvent)="setCurrentDraw($event)"
     ></app-draw-options>
   </div>
   <div class="col-md-6">

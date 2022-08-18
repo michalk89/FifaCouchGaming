@@ -7,6 +7,9 @@ import { SelectionModel } from 'src/app/models/selection.model';
 import { State } from 'src/app/state/app.state';
 import { getGroups } from 'src/app/state/groups';
 import { getSelections } from 'src/app/state/selections';
+import { DrawState } from 'src/app/state/draw/draw.reducer';
+import { getCurrentDraw } from 'src/app/state/draw';
+import { DrawPageActions } from 'src/app/state/draw/actions';
 
 @Component({
   selector: 'app-draw',
@@ -16,6 +19,7 @@ import { getSelections } from 'src/app/state/selections';
 export class DrawComponent implements OnInit {
   selections$: Observable<SelectionModel[]>;
   groups$: Observable<GroupModel[]>;
+  draw$: Observable<DrawState>;
   drawResults: DrawResultItemModel[] = [];
   
   constructor(private store: Store<State>) { }
@@ -23,9 +27,14 @@ export class DrawComponent implements OnInit {
   ngOnInit(): void {
     this.groups$ = this.store.select(getGroups);
     this.selections$ = this.store.select(getSelections);
+    this.draw$ = this.store.select(getCurrentDraw)
   }
 
   setResults = (data: DrawResultItemModel[]) => {
     this.drawResults = data;
+  };
+
+  setCurrentDraw = (draw: DrawState) => {
+    this.store.dispatch(DrawPageActions.setCurrentDraw({ draw }))
   };
 }

@@ -7,6 +7,7 @@ import { ScheduleGameplayTypeEnum } from "src/app/enums/schedule-gameplay-type.e
 import { PlayerModel } from "src/app/models/player.model";
 import { ScheduleResultModel } from "src/app/models/schedule-result.model";
 import { TeamPairPlayersModel } from "src/app/models/team-pair-players.model";
+import { ScheduleState } from "src/app/state/schedule/schedule.reducer";
 
 
 @Component({
@@ -15,22 +16,30 @@ import { TeamPairPlayersModel } from "src/app/models/team-pair-players.model";
   styleUrls: ["./schedule-options.component.scss"],
 })
 export class ScheduleOptionsComponent implements OnInit {
+  @Input() currentSchedule: ScheduleState | null;
   @Input() groups: GroupModel[] | null;
   @Input() results: ScheduleResultItemModel[];
   @Output() scheduleResultsGeneratedEvent: EventEmitter<
     ScheduleResultModel
   > = new EventEmitter<ScheduleResultModel>();
+  @Output() scheduleCompletedEvent: EventEmitter<ScheduleState> = new EventEmitter<ScheduleState>();
 
   optionsForm: FormGroup;
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    const scheduleExists = this.currentSchedule?.options != null && this.currentSchedule?.scheduleResults !== null;
+
     this.optionsForm = this.fb.group({
-      playersGroups: ["null", Validators.required],
-      gameplayType: ["null", Validators.required],
-      withRematches: ["null", Validators.required],
+      playersGroups: [scheduleExists ? this.currentSchedule?.options?.groupId : "null", Validators.required],
+      gameplayType: [scheduleExists ? this.currentSchedule?.options?.gameplayType : "null", Validators.required],
+      withRematches: [scheduleExists ? this.currentSchedule?.options?.withRematches : "null", Validators.required],
     });
+
+    if(scheduleExists) {
+      this.scheduleResultsGeneratedEvent.emit(this.currentSchedule?.scheduleResults!)
+    }
   }
 
   setScheduleOptions = () => {
@@ -63,6 +72,10 @@ export class ScheduleOptionsComponent implements OnInit {
     };
 
     this.scheduleResultsGeneratedEvent.emit(data);
+    this.scheduleCompletedEvent.emit({
+      options,
+      scheduleResults: data
+    });
   };
 
   generateScheduleForSingles = (

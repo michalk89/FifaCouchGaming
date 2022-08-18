@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { GroupsPageActions, GroupsApiActions } from "./actions";
-import { catchError, mergeMap, of } from "rxjs";
-import { map, tap } from "rxjs";
+import { catchError, mergeMap, of, map, tap } from "rxjs";
 import { Store } from "@ngrx/store";
 import { State } from "../app.state";
 import { getGroups } from ".";

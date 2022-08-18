@@ -13,6 +13,8 @@ import { selectionsReducer } from '../state/selections/selections.reducer';
 import { ScheduleOptionsComponent } from './schedule/components/schedule-options/schedule-options.component';
 import { SchedulePlayersPreviewComponent } from './schedule/components/schedule-players-preview/schedule-players-preview.component';
 import { ScheduleResultsComponent } from './schedule/components/schedule-results/schedule-results.component';
+import { scheduleReducer } from '../state/schedule/schedule.reducer';
+import { ScheduleEffects } from '../state/schedule/schedule.effects';
 
 const scheduleRoutes: Routes = [
   { path: '', component: ScheduleComponent }
@@ -32,7 +34,8 @@ const scheduleRoutes: Routes = [
     RouterModule.forChild(scheduleRoutes),
     StoreModule.forFeature('groups', groupsReducer),
     StoreModule.forFeature('selections', selectionsReducer),
-    EffectsModule.forFeature([GroupsEffects, SelectionsEffects]),
+    StoreModule.forFeature('schedule', scheduleReducer),
+    EffectsModule.forFeature([GroupsEffects, SelectionsEffects, ScheduleEffects]),
   ]
 })
 export class ScheduleModule { }
