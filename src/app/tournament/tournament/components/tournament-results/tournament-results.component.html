@@ -1,1 +1,20 @@
-<p>tournament-results works!</p>
+<div class="lay rounded p-4 my-4">
+  <div class="col-md-12 mb-4 text-center">
+    <strong>Results</strong>
+  </div>
+  <div
+    class="col-md-12 tournamentScheduleEntry"
+    *ngFor="let entry of tournamentSchedule"
+  >
+    <div class="col-md-4 w-25">{{ entry.home }}</div>
+    <div class="d-flex flex-row justify-content-center col-md-4">
+      <input type="number" class="w-25 mx-2" min="0" (onBlur)="calculate" />
+      :
+      <input type="number" class="w-25 mx-2" min="0" />
+    </div>
+    <div class="col-md-4 w-25 text-end">{{ entry.away }}</div>
+  </div>
+  <div class="col-md-12 mt-3">
+    <button type="button" class="app-btn-primary w-100 rounded btn-lg">Update Table</button>
+  </div>
+</div>

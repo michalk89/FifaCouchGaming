@@ -21,7 +21,7 @@ body {
 }
 
 .lay {
-    border: 2px solid white
+    border: 2px solid $white
 }
 
 tr {
@@ -29,5 +29,5 @@ tr {
 }
 
 table {
-    color: white !important
+    color: $white !important
 }

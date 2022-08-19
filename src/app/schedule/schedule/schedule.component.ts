@@ -1,28 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { GroupModel } from 'src/app/models/group.model';
-import { SelectionModel } from 'src/app/models/selection.model';
-import { State } from 'src/app/state/app.state';
-import { getGroups } from 'src/app/state/groups';
-import { getSelections } from 'src/app/state/selections';
-import { ScheduleResultModel } from 'src/app/models/schedule-result.model';
-import { ScheduleState } from 'src/app/state/schedule/schedule.reducer';
-import { getCurrentSchedule } from 'src/app/state/schedule';
-import { SchedulePageActions } from 'src/app/state/schedule/actions';
+import { Component, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { Observable } from "rxjs";
+import { GroupModel } from "src/app/models/group.model";
+import { SelectionModel } from "src/app/models/selection.model";
+import { State } from "src/app/state/app.state";
+import { getGroups } from "src/app/state/groups";
+import { getSelections } from "src/app/state/selections";
+import { ScheduleResultModel } from "src/app/models/schedule-result.model";
+import { ScheduleState } from "src/app/state/schedule/schedule.reducer";
+import { getCurrentSchedule } from "src/app/state/schedule";
+import { SchedulePageActions } from "src/app/state/schedule/actions";
 
 @Component({
-  selector: 'app-schedule',
-  templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.scss']
+  selector: "app-schedule",
+  templateUrl: "./schedule.component.html",
+  styleUrls: ["./schedule.component.scss"],
 })
 export class ScheduleComponent implements OnInit {
   selections$: Observable<SelectionModel[]>;
   groups$: Observable<GroupModel[]>;
   schedule$: Observable<ScheduleState>;
   scheduleResults: ScheduleResultModel;
-  
-  constructor(private store: Store<State>) { }
+
+  constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
     this.groups$ = this.store.select(getGroups);
@@ -35,6 +35,6 @@ export class ScheduleComponent implements OnInit {
   };
 
   setCurrentSchedule = (schedule: ScheduleState) => {
-    this.store.dispatch(SchedulePageActions.setCurrentSchedule({ schedule }))
+    this.store.dispatch(SchedulePageActions.setCurrentSchedule({ schedule }));
   };
 }

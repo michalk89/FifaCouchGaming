@@ -1,12 +1,31 @@
 <div class="row m-2">
-    <div class="col-md-12">
-      <app-section-header [title]="'Tournament'"></app-section-header>
-    </div>
-    <div class="col-md-6">
-        <app-tournament-table></app-tournament-table>
-    </div>
-    <div class="col-md-6">
-        <app-tournament-results></app-tournament-results>
-    </div>
+  <div class="col-md-12">
+    <app-section-header [title]="'Tournament'"></app-section-header>
   </div>
-  
+  <ng-container
+    *ngIf="!(draw$ | async)?.options && !(schedule$ | async)?.options"
+  >
+    <div class="col-md-12 alert rounded p-4 m-2 mt-5">
+      It seems <span class="yellow">You</span> didn't generate
+      <span class="yellow">draw</span> or
+      <span class="yellow">schedule</span> yet. Please fix this to access
+      <span class="yellow">tournament</span> functionality.
+    </div>
+  </ng-container>
+  <ng-container
+    *ngIf="(draw$ | async)?.options && (schedule$ | async)?.options"
+  >
+    <div class="col-md-6">
+      <app-tournament-table
+        [draw]="draw$ | async"
+        [schedule]="schedule$ | async"
+      ></app-tournament-table>
+    </div>
+    <div class="col-md-6">
+      <app-tournament-results
+        [draw]="draw$ | async"
+        [schedule]="schedule$ | async"
+      ></app-tournament-results>
+    </div>
+  </ng-container>
+</div>

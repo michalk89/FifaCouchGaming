@@ -12,6 +12,8 @@ import { ScheduleEffects } from '../state/schedule/schedule.effects';
 import { DrawEffects } from '../state/draw/draw.effects';
 import { TournamentTableComponent } from './tournament/components/tournament-table/tournament-table.component';
 import { TournamentResultsComponent } from './tournament/components/tournament-results/tournament-results.component';
+import { TournamentAlertComponent } from './tournament/components/tournament-alert/tournament-alert.component';
+import { SortStandingsPipe } from '../pipes/sort-standings.pipe';
 
 const tournamentRoutes: Routes = [
   { path: '', component: TournamentComponent }
@@ -21,7 +23,9 @@ const tournamentRoutes: Routes = [
   declarations: [
     TournamentComponent,
     TournamentTableComponent,
-    TournamentResultsComponent
+    TournamentResultsComponent,
+    TournamentAlertComponent,
+    SortStandingsPipe
   ],
   imports: [
     CommonModule,

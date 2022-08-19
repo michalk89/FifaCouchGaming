@@ -9,6 +9,7 @@ import { LayoutComponent } from './main/layout/layout.component';
 import { HomeComponent } from './main/home/home.component';
 import { MenuComponent } from './main/menu/menu.component';
 import { SharedModule } from './shared/shared.module';
+import { SortStandingsPipe } from './pipes/sort-standings.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SharedModule } from './shared/shared.module';
     LayoutComponent,
     HomeComponent,
     MenuComponent,
+    SortStandingsPipe,
   ],
   imports: [
     BrowserModule,
