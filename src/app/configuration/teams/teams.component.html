@@ -5,6 +5,7 @@
   <div class="col-md-4">
     <app-teams-selections
       [selections]="selections$ | async"
+      [selectedSelection]="selectedSelection$ | async"
       (deleteSelectionEvent)="deleteSelection($event)"
       (selectionSelectedEvent)="setCurrentSelection($event)"
       (createSelectionEvent)="createSelection($event)"

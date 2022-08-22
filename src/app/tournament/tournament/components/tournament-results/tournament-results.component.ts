@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TournamentScheduleEntryModel } from 'src/app/models/tournament-schedule-entry.model';
 import { DrawState } from 'src/app/state/draw/draw.reducer';
 import { ScheduleState } from 'src/app/state/schedule/schedule.reducer';
 
@@ -10,7 +11,9 @@ import { ScheduleState } from 'src/app/state/schedule/schedule.reducer';
 export class TournamentResultsComponent implements OnInit {
   @Input() schedule: ScheduleState | null;
   @Input() draw: DrawState | null;
-  tournamentSchedule: any[] = [];
+  tournamentSchedule: TournamentScheduleEntryModel[] = [];
+  @Output() updateLiveTableEvent: EventEmitter<TournamentScheduleEntryModel> = new EventEmitter<TournamentScheduleEntryModel>();
+
   constructor() { }
 
   ngOnInit(): void {
@@ -18,17 +21,18 @@ export class TournamentResultsComponent implements OnInit {
   }
 
   generateTournamentSchedule = () => {
-    console.log(this.schedule)
     this.tournamentSchedule = this.schedule!.scheduleResults!.results.map((entry, i) => {
       return {
         id: i+1,
         home: entry.home,
-        homeScore: 0,
+        homeScore: null,
         away: entry.away,
-        awayScore: 0
+        awayScore: null
       }
     });
-    console.log(this.tournamentSchedule)
   };
 
+  updateLiveTable = (entry: TournamentScheduleEntryModel) => {
+    this.updateLiveTableEvent.emit(entry);
+  };
 }

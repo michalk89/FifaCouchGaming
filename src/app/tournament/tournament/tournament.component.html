@@ -16,7 +16,7 @@
     *ngIf="(draw$ | async)?.options && (schedule$ | async)?.options"
   >
     <div class="col-md-6">
-      <app-tournament-table
+      <app-tournament-table #tableComponent
         [draw]="draw$ | async"
         [schedule]="schedule$ | async"
       ></app-tournament-table>
@@ -25,6 +25,7 @@
       <app-tournament-results
         [draw]="draw$ | async"
         [schedule]="schedule$ | async"
+        (updateLiveTableEvent)="updateLiveTable($event)"
       ></app-tournament-results>
     </div>
   </ng-container>

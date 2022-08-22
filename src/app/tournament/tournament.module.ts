@@ -14,6 +14,7 @@ import { TournamentTableComponent } from './tournament/components/tournament-tab
 import { TournamentResultsComponent } from './tournament/components/tournament-results/tournament-results.component';
 import { TournamentAlertComponent } from './tournament/components/tournament-alert/tournament-alert.component';
 import { SortStandingsPipe } from '../pipes/sort-standings.pipe';
+import { TournamentResultItemComponent } from './tournament/components/tournament-result-item/tournament-result-item.component';
 
 const tournamentRoutes: Routes = [
   { path: '', component: TournamentComponent }
@@ -25,7 +26,8 @@ const tournamentRoutes: Routes = [
     TournamentTableComponent,
     TournamentResultsComponent,
     TournamentAlertComponent,
-    SortStandingsPipe
+    SortStandingsPipe,
+    TournamentResultItemComponent
   ],
   imports: [
     CommonModule,

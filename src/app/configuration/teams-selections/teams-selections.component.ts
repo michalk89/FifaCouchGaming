@@ -8,6 +8,7 @@ import { SelectionModel } from 'src/app/models/selection.model';
 })
 export class TeamsSelectionsComponent implements OnInit {
   @Input() selections: SelectionModel[] | null;
+  @Input() selectedSelection: SelectionModel | null
   @Output() deleteSelectionEvent: EventEmitter<number> = new EventEmitter<number>();
   @Output() selectionSelectedEvent: EventEmitter<number> = new EventEmitter<number>();
   @Output() createSelectionEvent: EventEmitter<SelectionModel> = new EventEmitter<SelectionModel>();
@@ -18,6 +19,9 @@ export class TeamsSelectionsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if(this.selectedSelection) {
+      this.activeRowId = this.selectedSelection.id;
+    }
   }
 
   deleteSelection = (id: number) => {
@@ -38,6 +42,7 @@ export class TeamsSelectionsComponent implements OnInit {
 
     this.createSelectionEvent.emit(newSelection);
     this.showCreateSelectionComponent = false;
+    this.activeRowId = newSelection.id;
   };
 
   showCreateSelection = () => {

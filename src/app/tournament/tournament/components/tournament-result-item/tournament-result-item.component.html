@@ -1,0 +1,26 @@
+<form
+  novalidate
+  [formGroup]="entryForm"
+  class="tournamentScheduleEntry"
+  *ngIf="entry"
+>
+  <div class="col-md-4 w-25">{{ entry.home }}</div>
+  <div
+    class="d-flex flex-row justify-content-center align-items-center col-md-4"
+  >
+    <select class="form-select" id="homeScoreSelect" formControlName="homeScore" (change)="update()">
+      <option value="null">Select score</option>
+      <option *ngFor="let score of scoreOptions" [value]="score">
+        {{ score }}
+      </option>
+    </select>
+    :
+    <select class="form-select" id="awayScoreSelect" formControlName="awayScore" (change)="update()">
+      <option value="null">Select score</option>
+      <option *ngFor="let score of scoreOptions" [value]="score">
+        {{ score }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-4 w-25 text-end">{{ entry.away }}</div>
+</form>
