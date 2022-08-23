@@ -15,6 +15,7 @@ import { TournamentResultsComponent } from './tournament/components/tournament-r
 import { TournamentAlertComponent } from './tournament/components/tournament-alert/tournament-alert.component';
 import { SortStandingsPipe } from '../pipes/sort-standings.pipe';
 import { TournamentResultItemComponent } from './tournament/components/tournament-result-item/tournament-result-item.component';
+import { tournamentReducer } from '../state/tournament/tournament.reducer';
 
 const tournamentRoutes: Routes = [
   { path: '', component: TournamentComponent }
@@ -36,6 +37,7 @@ const tournamentRoutes: Routes = [
     RouterModule.forChild(tournamentRoutes),
     StoreModule.forFeature('schedule', scheduleReducer),
     StoreModule.forFeature('draw', drawReducer),
+    StoreModule.forFeature('tournament', tournamentReducer),
     EffectsModule.forFeature([ScheduleEffects, DrawEffects]),
   ]
 })

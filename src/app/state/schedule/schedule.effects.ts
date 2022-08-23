@@ -4,7 +4,8 @@ import { Store } from "@ngrx/store";
 import { State } from "../app.state";
 import { SchedulePageActions, ScheduleApiActions } from "./actions";
 import { catchError, map, mergeMap, of, tap } from "rxjs";
-import { getCurrentSchedule } from ".";
+import { getCurrentSchedule, getCurrentScheduleResults } from ".";
+import { TournamentPageActions } from "../tournament/actions";
 
 @Injectable()
 export class ScheduleEffects {
@@ -21,6 +22,18 @@ export class ScheduleEffects {
             of(ScheduleApiActions.getScheduleFailure({ error }))
           )
         )
+      )
+    );
+  });
+
+  setTournamentSchedule$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SchedulePageActions.setCurrentSchedule),
+      mergeMap(() =>
+        this.store.select(getCurrentScheduleResults).pipe(
+          map((results) => TournamentPageActions.setInitialSchedule({ scheduleResults: results })),
+          tap(() => console.log('i was here lol'))
+        ),
       )
     );
   });

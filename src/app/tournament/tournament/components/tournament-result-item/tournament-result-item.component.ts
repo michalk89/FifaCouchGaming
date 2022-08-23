@@ -19,6 +19,7 @@ export class TournamentResultItemComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.entry) {
+      console.log(this.entry)
       this.entryForm = this.fb.group({
         homeScore: this.entry.homeScore,
         awayScore: this.entry.awayScore,

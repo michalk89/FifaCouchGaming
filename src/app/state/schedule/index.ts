@@ -7,3 +7,8 @@ export const getCurrentSchedule = createSelector(
     getScheduleFeatureState,
     state => state
 );
+
+export const getCurrentScheduleResults = createSelector(
+    getScheduleFeatureState,
+    state => state.scheduleResults?.results ?? []
+)

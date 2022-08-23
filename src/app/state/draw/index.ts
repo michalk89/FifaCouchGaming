@@ -7,3 +7,8 @@ export const getCurrentDraw = createSelector(
     getDrawFeatureState,
     state => state
 );
+
+export const getCurrentDrawResults = createSelector(
+    getDrawFeatureState,
+    state => state.results
+)
