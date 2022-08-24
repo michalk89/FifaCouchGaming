@@ -16,7 +16,6 @@ export class GroupsEffects {
       mergeMap(() =>
         this.store.select(getGroups).pipe(
           map((groups) => GroupsApiActions.loadGroupsSuccess({ groups })),
-          tap((groups) => console.log(groups)),
           catchError((error) =>
             of(GroupsApiActions.loadGroupsFailure({ error }))
           )

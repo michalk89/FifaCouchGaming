@@ -3,7 +3,7 @@
     <app-section-header [title]="'Tournament'"></app-section-header>
   </div>
   <ng-container
-    *ngIf="!(draw$ | async)?.options && !(schedule$ | async)?.options"
+    *ngIf="!(draw$ | async)?.options || !(schedule$ | async)?.options"
   >
     <div class="col-md-12 alert rounded p-4 m-2 mt-5">
       It seems <span class="yellow">You</span> didn't generate
@@ -13,17 +13,38 @@
     </div>
   </ng-container>
   <ng-container
-    *ngIf="(draw$ | async)?.options && (schedule$ | async)?.options"
+    *ngIf="
+      (draw$ | async)?.options &&
+      (schedule$ | async)?.options &&
+      (draw$ | async)?.options?.groupId !==
+        (schedule$ | async)?.options?.groupId
+    "
+  >
+    <div class="col-md-12 alert rounded p-4 m-2 mt-5">
+      It seems <span class="yellow">You</span> selected
+      <span class="yellow">two different groups of players</span> in
+      <span class="yellow">schedule</span> and <span class="yellow">draw</span>.
+      Please fix this to access
+      <span class="yellow">tournament</span> functionality.
+    </div>
+  </ng-container>
+  <ng-container
+    *ngIf="
+      (draw$ | async)?.options &&
+      (schedule$ | async)?.options &&
+      (draw$ | async)?.options?.groupId ===
+        (schedule$ | async)?.options?.groupId
+    "
   >
     <div class="col-md-6">
-      <app-tournament-table 
-        [standings]="standings$ | async"
+      <app-tournament-table
+        [standings]="tournamentStandings$ | async"
       ></app-tournament-table>
     </div>
     <div class="col-md-6">
       <app-tournament-results
         [tournamentSchedule]="tournamentSchedule$ | async"
-        (updateLiveTableEvent)="updateLiveTable($event)"
+        (updateStandingsAndScheduleEvent)="updateStandingsAndSchedule($event)"
       ></app-tournament-results>
     </div>
   </ng-container>

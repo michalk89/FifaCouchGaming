@@ -19,7 +19,6 @@ export class SelectionsEffects {
           map((selections) =>
             SelectionsApiActions.loadSelectionsSuccess({ selections })
           ),
-          tap((selections) => console.log(selections)),
           catchError((error) =>
             of(SelectionsApiActions.loadSelectionsFailure({ error }))
           )

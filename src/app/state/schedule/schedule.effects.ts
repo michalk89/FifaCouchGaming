@@ -17,7 +17,6 @@ export class ScheduleEffects {
       mergeMap(() =>
         this.store.select(getCurrentSchedule).pipe(
           map((schedule) => ScheduleApiActions.getScheduleSuccess({ schedule })),
-          tap((schedule) => console.log(schedule)),
           catchError((error) =>
             of(ScheduleApiActions.getScheduleFailure({ error }))
           )
@@ -32,7 +31,6 @@ export class ScheduleEffects {
       mergeMap(() =>
         this.store.select(getCurrentScheduleResults).pipe(
           map((results) => TournamentPageActions.setInitialSchedule({ scheduleResults: results })),
-          tap(() => console.log('i was here lol'))
         ),
       )
     );

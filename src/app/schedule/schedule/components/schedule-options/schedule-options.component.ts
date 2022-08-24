@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { GroupModel } from "src/app/models/group.model";
 import { ScheduleOptionsModel } from "src/app/models/schedule-options.model";
 import { ScheduleResultItemModel } from "src/app/models/schedule-result-item.model";
-import { ScheduleGameplayTypeEnum } from "src/app/enums/schedule-gameplay-type.enum";
+import { GameplayTypeEnum } from "src/app/enums/gameplay-type.enum";
 import { PlayerModel } from "src/app/models/player.model";
 import { ScheduleResultModel } from "src/app/models/schedule-result.model";
 import { TeamPairPlayersModel } from "src/app/models/team-pair-players.model";
@@ -62,7 +62,7 @@ export class ScheduleOptionsComponent implements OnInit {
     let results: ScheduleResultItemModel[] = [];
 
     results =
-      options.gameplayType === ScheduleGameplayTypeEnum.SINGLE
+      options.gameplayType === GameplayTypeEnum.SINGLE
         ? this.generateScheduleForSingles(options, players)
         : this.generateScheduleForPairs(options, players);
 

@@ -9,7 +9,7 @@ import { TournamentScheduleEntryModel } from "src/app/models/tournament-schedule
 })
 export class TournamentResultItemComponent implements OnInit {
   @Input() entry: TournamentScheduleEntryModel | null;
-  @Output() updateLiveTableEvent: EventEmitter<TournamentScheduleEntryModel> =
+  @Output() updateStandingsAndScheduleEvent: EventEmitter<TournamentScheduleEntryModel> =
     new EventEmitter<TournamentScheduleEntryModel>();
   scoreOptions: number[] = [...Array(11).keys()];
 
@@ -19,7 +19,6 @@ export class TournamentResultItemComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.entry) {
-      console.log(this.entry)
       this.entryForm = this.fb.group({
         homeScore: this.entry.homeScore,
         awayScore: this.entry.awayScore,
@@ -35,7 +34,7 @@ export class TournamentResultItemComponent implements OnInit {
       this.awayScoreControl.value !== "null" &&
       this.entry
     ) {
-      this.updateLiveTableEvent.emit({
+      this.updateStandingsAndScheduleEvent.emit({
         ...this.entry,
         homeScore: +this.homeScoreControl.value,
         awayScore: +this.awayScoreControl.value,

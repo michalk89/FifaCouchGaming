@@ -5,7 +5,7 @@
       *ngFor="let team of selectedTeams | sortTeams"
     >
       <span
-        ><strong>{{ team.name }}</strong></span
+        ><strong>{{ team.name }} ({{team.stars}} <i class="bi bi-star-fill yellow"></i>)</strong></span
       >
       <button
         type="button"

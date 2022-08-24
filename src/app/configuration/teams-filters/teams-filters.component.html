@@ -3,13 +3,17 @@
     <div class="col-md-12 d-flex justify-content-center align-items-center my-3">
         <strong>Quick filters</strong>
     </div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-lg app-btn-primary btn-option w-100" (click)="addAll()">Add all teams</button>
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-lg app-btn-primary btn-option w-100" (click)="removeAll()">Remove all teams</button>
+    </div>
     <div class="col-md-12 d-flex flex-column">
-        <button type="button" class="btn app-btn-primary btn-option" (click)="addAll()">Add all teams</button>
-        <button type="button" class="btn app-btn-primary btn-option" (click)="removeAll()">Remove all teams</button>
-        <button type="button" class="btn app-btn-primary btn-option" (click)="addTeamsByStars(4)">Select 4+ stars teams</button>
-        <button type="button" class="btn app-btn-primary btn-option" (click)="addTeamsByStars(4.5)">Select 4.5+ stars teams</button>
-        <button type="button" class="btn app-btn-primary btn-option" (click)="addTeamsByStars(5)">Select 5 stars teams</button>
-        <button type="button" class="btn app-btn-primary btn-option" (click)="addBestTeamsFromEachLeague()">Select 5 best teams from each league</button>
+        <button type="button" class="btn app-btn-secondary btn-option" (click)="addTeamsByStars(4)">Select 4+ stars teams</button>
+        <button type="button" class="btn app-btn-secondary btn-option" (click)="addTeamsByStars(4.5)">Select 4.5+ stars teams</button>
+        <button type="button" class="btn app-btn-secondary btn-option" (click)="addTeamsByStars(5)">Select 5 stars teams</button>
+        <button type="button" class="btn app-btn-secondary btn-option" (click)="addBestTeamsFromEachLeague()">Select 5 best teams from each league</button>
     </div>
   </div>
 </div>

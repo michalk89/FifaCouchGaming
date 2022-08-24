@@ -8,15 +8,15 @@ import { TournamentScheduleEntryModel } from 'src/app/models/tournament-schedule
 })
 export class TournamentResultsComponent implements OnInit {
   @Input() tournamentSchedule: TournamentScheduleEntryModel[] | null;
-  @Output() updateLiveTableEvent: EventEmitter<TournamentScheduleEntryModel> = new EventEmitter<TournamentScheduleEntryModel>();
+  @Output() updateStandingsAndScheduleEvent: EventEmitter<TournamentScheduleEntryModel> = new EventEmitter<TournamentScheduleEntryModel>();
 
   constructor() { }
 
   ngOnInit(): void {
-
+    console.log(this.tournamentSchedule)
   }
 
-  updateLiveTable = (entry: TournamentScheduleEntryModel) => {
-    this.updateLiveTableEvent.emit(entry);
+  updateStandingsAndSchedule = (entry: TournamentScheduleEntryModel) => {
+    this.updateStandingsAndScheduleEvent.emit(entry);
   };
 }

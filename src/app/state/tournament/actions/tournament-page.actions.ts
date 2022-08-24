@@ -17,3 +17,10 @@ export const updateStandings = createAction(
   "[Tournament] Update Standings",
   props<{ entry: TournamentScheduleEntryModel }>()
 );
+
+export const updateSchedule = createAction(
+  "[Tournament] Update Schedule",
+  props<{ entry: TournamentScheduleEntryModel }>()
+);
+
+

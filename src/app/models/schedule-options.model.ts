@@ -1,7 +1,7 @@
-import { ScheduleGameplayTypeEnum } from "../enums/schedule-gameplay-type.enum";
+import { GameplayTypeEnum } from "../enums/gameplay-type.enum";
 
 export interface ScheduleOptionsModel {
     groupId: number;
-    gameplayType: ScheduleGameplayTypeEnum;
+    gameplayType: GameplayTypeEnum;
     withRematches: boolean;
 }

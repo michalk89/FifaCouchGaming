@@ -19,7 +19,7 @@ import { TournamentPageActions } from "src/app/state/tournament/actions";
 export class TournamentComponent implements OnInit {
   draw$: Observable<DrawState>;
   schedule$: Observable<ScheduleState>;
-  standings$: Observable<TournametTableEntryModel[]>;
+  tournamentStandings$: Observable<TournametTableEntryModel[]>;
   tournamentSchedule$: Observable<TournamentScheduleEntryModel[]>;
 
   constructor(private store: Store<State>) {}
@@ -27,11 +27,12 @@ export class TournamentComponent implements OnInit {
   ngOnInit(): void {
     this.draw$ = this.store.select(getCurrentDraw);
     this.schedule$ = this.store.select(getCurrentSchedule);
-    this.standings$ = this.store.select(getStandings);
+    this.tournamentStandings$ = this.store.select(getStandings);
     this.tournamentSchedule$ = this.store.select(getSchedule);
   }
 
-  updateLiveTable = (entry: TournamentScheduleEntryModel) => {
+  updateStandingsAndSchedule = (entry: TournamentScheduleEntryModel) => {
     this.store.dispatch(TournamentPageActions.updateStandings({ entry }));
+    this.store.dispatch(TournamentPageActions.updateSchedule({ entry }));
   };
 }

@@ -41,11 +41,9 @@ export const tournamentReducer = createReducer<TournamentState>(
   on(
     TournamentPageActions.setInitialSchedule,
     (state, action): TournamentState => {
-      debugger
-
       return {
         ...state,
-        schedule: action.scheduleResults.map((entry, i) => {
+        schedule: state.schedule.length > 0 && state.schedule.length == action.scheduleResults.length ? state.schedule : action.scheduleResults.map((entry, i) => {
           return {
             id: i + 1,
             home: entry.home,
@@ -98,6 +96,19 @@ export const tournamentReducer = createReducer<TournamentState>(
         ...state,
         updateHistory: [...state.updateHistory, action.entry],
         standings: [...updatedStandings],
+      };
+    }
+  ),
+  on(
+    TournamentPageActions.updateSchedule,
+    (state, action): TournamentState => {
+      const updatedSchedule = state.schedule.map(s => {
+        return s.id === action.entry.id ? action.entry : s
+      });
+
+      return {
+        ...state,
+        schedule: [...updatedSchedule]
       };
     }
   )
