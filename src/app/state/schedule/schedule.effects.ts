@@ -28,11 +28,7 @@ export class ScheduleEffects {
   setTournamentSchedule$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(SchedulePageActions.setCurrentSchedule),
-      mergeMap(() =>
-        this.store.select(getCurrentScheduleResults).pipe(
-          map((results) => TournamentPageActions.setInitialSchedule({ scheduleResults: results })),
-        ),
-      )
+      mergeMap(action => of(TournamentPageActions.setInitialSchedule({ scheduleResults: action.schedule.scheduleResults?.results ?? [] })))
     );
   });
 }

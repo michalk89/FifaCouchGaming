@@ -10,5 +10,5 @@ export const getCurrentDraw = createSelector(
 
 export const getCurrentDrawResults = createSelector(
     getDrawFeatureState,
-    state => state.results
-)
+    state => state?.results ?? []
+);

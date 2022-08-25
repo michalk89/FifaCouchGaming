@@ -40,6 +40,20 @@
         </select>
       </div>
       <div class="col-md-12">
+        <label for="assignTeamsOption" class="form-label"
+          >Assign randomized teams</label
+        >
+        <select
+          class="form-select mb-3"
+          id="assignTeamsOption"
+          formControlName="assignTeamsOption"
+        >
+          <option value="0">Don't assign teams</option>
+          <option value="1">Assign teams evenly</option>
+          <option value="2">Assign teams randomly</option>
+        </select>
+      </div>
+      <div class="col-md-12">
         <label for="withRematches" class="form-label">With rematches?</label>
         <select
           class="form-select mb-3"

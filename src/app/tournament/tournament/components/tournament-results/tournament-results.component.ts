@@ -13,7 +13,7 @@ export class TournamentResultsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.tournamentSchedule)
+
   }
 
   updateStandingsAndSchedule = (entry: TournamentScheduleEntryModel) => {

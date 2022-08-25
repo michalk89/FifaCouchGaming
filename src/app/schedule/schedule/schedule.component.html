@@ -5,6 +5,7 @@
   <div class="col-md-4">
     <app-schedule-options
       [groups]="groups$ | async"
+      [drawResults]="drawResults$ | async"
       [currentSchedule]="schedule$ | async"
       (scheduleResultsGeneratedEvent)="setResults($event)"
       (scheduleCompletedEvent)="setCurrentSchedule($event)"

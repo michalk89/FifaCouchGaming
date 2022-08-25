@@ -8,6 +8,8 @@ import { PlayerModel } from "src/app/models/player.model";
 import { ScheduleResultModel } from "src/app/models/schedule-result.model";
 import { TeamPairPlayersModel } from "src/app/models/team-pair-players.model";
 import { ScheduleState } from "src/app/state/schedule/schedule.reducer";
+import { DrawResultItemModel } from "src/app/models/draw-result-item.model";
+import { ScheduleAssignTeamsOptionEnum } from "src/app/enums/schedule-assign-teams-option.enum";
 
 
 @Component({
@@ -17,6 +19,7 @@ import { ScheduleState } from "src/app/state/schedule/schedule.reducer";
 })
 export class ScheduleOptionsComponent implements OnInit {
   @Input() currentSchedule: ScheduleState | null;
+  @Input() drawResults: DrawResultItemModel[] | null;
   @Input() groups: GroupModel[] | null;
   @Input() results: ScheduleResultItemModel[];
   @Output() scheduleResultsGeneratedEvent: EventEmitter<
@@ -34,6 +37,7 @@ export class ScheduleOptionsComponent implements OnInit {
     this.optionsForm = this.fb.group({
       playersGroups: [scheduleExists ? this.currentSchedule?.options?.groupId : "null", Validators.required],
       gameplayType: [scheduleExists ? this.currentSchedule?.options?.gameplayType : "null", Validators.required],
+      assignTeamsOption: [scheduleExists ? this.currentSchedule?.options?.assignTeamsOption : 0],
       withRematches: [scheduleExists ? this.currentSchedule?.options?.withRematches : "null", Validators.required],
     });
 
@@ -45,11 +49,13 @@ export class ScheduleOptionsComponent implements OnInit {
   setScheduleOptions = () => {
     const groupId = this.groupIdControl.value;
     const gameplayType = this.gameplayTypeControl.value;
+    const assignTeamsOption = this.assignTeamsOptionControl.value;
     const withRematches = this.withRematchesControl.value;
 
     const o: ScheduleOptionsModel = {
       groupId: +groupId,
       gameplayType: +gameplayType,
+      assignTeamsOption: +assignTeamsOption,
       withRematches: withRematches === "true",
     };
 
@@ -85,7 +91,7 @@ export class ScheduleOptionsComponent implements OnInit {
     const playerNames = players.map((p) => p.name);
     // generate schedule items array
     // then shuffle it
-    const results: ScheduleResultItemModel[] = playerNames
+    let results: ScheduleResultItemModel[] = playerNames
       .flatMap((player1, index) =>
         playerNames.slice(index + 1).map((player2) => {
           return {
@@ -95,6 +101,11 @@ export class ScheduleOptionsComponent implements OnInit {
         })
       )
       .sort(() => Math.random() - 0.5);
+
+    // check teams randomization options
+    if(options.assignTeamsOption !== ScheduleAssignTeamsOptionEnum.DontAssign) {
+      results = options.assignTeamsOption === ScheduleAssignTeamsOptionEnum.AssignRandomly ? this.assignTeamsRandomlyToPlayers(results) : this.assignTeamsEvenlyToPlayers(results);
+    }
 
     return options.withRematches ? this.generateRematches(results) : results;
   };
@@ -131,7 +142,7 @@ export class ScheduleOptionsComponent implements OnInit {
       .filter(m => m.home.p1 !== m.away.p1 && m.home.p1 !== m.away.p2 && m.home.p2 !== m.away.p1 && m.home.p2 !== m.away.p2)
     );
 
-    const results: ScheduleResultItemModel[] = matches
+    let results: ScheduleResultItemModel[] = matches
       .map(m => {
         return {
           home: `${m.home.p1} & ${m.home.p2}`,
@@ -140,7 +151,73 @@ export class ScheduleOptionsComponent implements OnInit {
       })
       .sort(() => Math.random() - 0.5);
 
+    // check teams randomization options
+    if(options.assignTeamsOption !== ScheduleAssignTeamsOptionEnum.DontAssign) {
+      results = options.assignTeamsOption === ScheduleAssignTeamsOptionEnum.AssignRandomly ? this.assignTeamsRandomlyToPlayers(results) : this.assignTeamsEvenlyToPlayers(results);
+    }
+
     return options.withRematches ? this.generateRematches(results) : results;
+  };
+
+  assignTeamsRandomlyToPlayers = (results: ScheduleResultItemModel[]): ScheduleResultItemModel[] => {
+    return results.map(scheduleItem => {
+      const availableTeamsHome = this.drawResults?.find(d => d.playerName === scheduleItem.home)?.drawnTeams;
+      const availableTeamsAway = this.drawResults?.find(d => d.playerName === scheduleItem.away)?.drawnTeams;
+
+      if(availableTeamsHome && availableTeamsAway) {
+        return {
+          ...scheduleItem,
+          homeTeam: availableTeamsHome[Math.floor(Math.random() * availableTeamsHome.length)],
+          awayTeam: availableTeamsAway[Math.floor(Math.random() * availableTeamsAway.length)]
+        }
+      }
+
+      return {
+        ...scheduleItem,
+      }
+    });
+  };
+
+  assignTeamsEvenlyToPlayers = (results: ScheduleResultItemModel[]): ScheduleResultItemModel[] => {
+    if(this.drawResults) {
+      let drawResults: { [key: string]: string[] } = {};
+      this.drawResults.forEach(dr => {
+        Object.assign(drawResults, { [dr.playerName]: dr.drawnTeams })
+      });
+      const initialDrawResults = {...drawResults};
+
+      return results.map(scheduleItem => {
+        const availableTeamsHome = drawResults[scheduleItem.home];
+        const availableTeamsAway = drawResults[scheduleItem.away];
+  
+        if(availableTeamsHome && availableTeamsAway) {
+          const selectedHomeTeam = availableTeamsHome[Math.floor(Math.random() * availableTeamsHome.length)];
+          const selectedAwayTeam = availableTeamsAway[Math.floor(Math.random() * availableTeamsAway.length)];
+
+          // remove selected options and restore all options if array empty
+          drawResults[scheduleItem.home] = drawResults[scheduleItem.home].filter(x => x !== selectedHomeTeam);
+          if(drawResults[scheduleItem.home].length === 0) {
+            drawResults[scheduleItem.home] = initialDrawResults[scheduleItem.home];
+          }
+          drawResults[scheduleItem.away] = drawResults[scheduleItem.away].filter(x => x !== selectedAwayTeam);
+          if(drawResults[scheduleItem.away].length === 0) {
+            drawResults[scheduleItem.away] = initialDrawResults[scheduleItem.away];
+          }
+
+          return {
+            ...scheduleItem,
+            homeTeam: selectedHomeTeam,
+            awayTeam: selectedAwayTeam
+          }
+        }
+  
+        return {
+          ...scheduleItem,
+        }
+      });
+    }
+
+    return [...results];
   };
 
   checkIfTeamPlayersAreUnique = (
@@ -162,6 +239,8 @@ export class ScheduleOptionsComponent implements OnInit {
       return {
         home: item.away,
         away: item.home,
+        homeTeam: item.awayTeam,
+        awayTeam: item.homeTeam
       };
     });
 
@@ -174,6 +253,10 @@ export class ScheduleOptionsComponent implements OnInit {
 
   get gameplayTypeControl() {
     return this.optionsForm.controls["gameplayType"];
+  };
+
+  get assignTeamsOptionControl() {
+    return this.optionsForm.controls["assignTeamsOption"];
   };
 
   get withRematchesControl() {

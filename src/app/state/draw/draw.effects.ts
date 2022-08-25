@@ -4,7 +4,7 @@ import { Store } from "@ngrx/store";
 import { State } from "../app.state";
 import { DrawPageActions, DrawApiActions } from "./actions";
 import { catchError, map, mergeMap, of } from "rxjs";
-import { getCurrentDraw, getCurrentDrawResults } from ".";
+import { getCurrentDraw } from ".";
 import { TournamentPageActions } from "../tournament/actions";
 
 @Injectable()
@@ -28,11 +28,7 @@ export class DrawEffects {
   setTournamentStandings$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(DrawPageActions.setCurrentDraw),
-      mergeMap(() =>
-        this.store.select(getCurrentDrawResults).pipe(
-          map((results) => TournamentPageActions.setInitialStandings({ drawResults: results }))
-        ),
-      )
+      mergeMap(action => of(TournamentPageActions.setInitialStandings({ drawResults: action.draw.results ?? [] })))
     );
   });
 }

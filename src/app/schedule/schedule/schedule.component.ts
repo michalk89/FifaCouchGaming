@@ -10,6 +10,8 @@ import { ScheduleResultModel } from "src/app/models/schedule-result.model";
 import { ScheduleState } from "src/app/state/schedule/schedule.reducer";
 import { getCurrentSchedule } from "src/app/state/schedule";
 import { SchedulePageActions } from "src/app/state/schedule/actions";
+import { getCurrentDrawResults } from "src/app/state/draw";
+import { DrawResultItemModel } from "src/app/models/draw-result-item.model";
 
 @Component({
   selector: "app-schedule",
@@ -20,6 +22,7 @@ export class ScheduleComponent implements OnInit {
   selections$: Observable<SelectionModel[]>;
   groups$: Observable<GroupModel[]>;
   schedule$: Observable<ScheduleState>;
+  drawResults$: Observable<DrawResultItemModel[]>;
   scheduleResults: ScheduleResultModel;
 
   constructor(private store: Store<State>) {}
@@ -28,6 +31,7 @@ export class ScheduleComponent implements OnInit {
     this.groups$ = this.store.select(getGroups);
     this.selections$ = this.store.select(getSelections);
     this.schedule$ = this.store.select(getCurrentSchedule);
+    this.drawResults$ = this.store.select(getCurrentDrawResults);
   }
 
   setResults = (data: ScheduleResultModel) => {

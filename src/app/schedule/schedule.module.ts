@@ -15,6 +15,7 @@ import { SchedulePlayersPreviewComponent } from './schedule/components/schedule-
 import { ScheduleResultsComponent } from './schedule/components/schedule-results/schedule-results.component';
 import { scheduleReducer } from '../state/schedule/schedule.reducer';
 import { ScheduleEffects } from '../state/schedule/schedule.effects';
+import { tournamentReducer } from '../state/tournament/tournament.reducer';
 
 const scheduleRoutes: Routes = [
   { path: '', component: ScheduleComponent }
@@ -35,6 +36,7 @@ const scheduleRoutes: Routes = [
     StoreModule.forFeature('groups', groupsReducer),
     StoreModule.forFeature('selections', selectionsReducer),
     StoreModule.forFeature('schedule', scheduleReducer),
+    StoreModule.forFeature('tournament', tournamentReducer),
     EffectsModule.forFeature([GroupsEffects, SelectionsEffects, ScheduleEffects]),
   ]
 })

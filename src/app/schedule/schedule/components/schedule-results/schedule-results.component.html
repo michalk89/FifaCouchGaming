@@ -16,8 +16,8 @@
         class="align-middle"
       >
         <th scope="row">{{ i + 1}}</th>
-        <td>{{ r.home }}</td>
-        <td>{{ r.away }}</td>
+        <td>{{ r.home }} <ng-container *ngIf="r.homeTeam">({{r.homeTeam}})</ng-container></td>
+        <td>{{ r.away }} <ng-container *ngIf="r.awayTeam">({{r.awayTeam}})</ng-container></td>
       </tr>
     </tbody>
   </table>

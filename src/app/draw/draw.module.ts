@@ -16,6 +16,7 @@ import { DrawTeamsPreviewComponent } from './draw-options/components/draw-teams-
 import { DrawResultsComponent } from './draw-results/draw-results.component';
 import { drawReducer } from '../state/draw/draw.reducer';
 import { DrawEffects } from '../state/draw/draw.effects';
+import { tournamentReducer } from '../state/tournament/tournament.reducer';
 
 const drawRoutes: Routes = [
   { path: '', component: DrawComponent }
@@ -37,6 +38,7 @@ const drawRoutes: Routes = [
     StoreModule.forFeature('groups', groupsReducer),
     StoreModule.forFeature('selections', selectionsReducer),
     StoreModule.forFeature('draw', drawReducer),
+    StoreModule.forFeature('tournament', tournamentReducer),
     EffectsModule.forFeature([GroupsEffects, SelectionsEffects, DrawEffects]),
   ]
 })
