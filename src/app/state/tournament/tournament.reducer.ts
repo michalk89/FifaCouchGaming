@@ -46,10 +46,12 @@ export const tournamentReducer = createReducer<TournamentState>(
         schedule: state.schedule.length > 0 && state.schedule.length == action.scheduleResults.length ? state.schedule : action.scheduleResults.map((entry, i) => {
           return {
             id: i + 1,
-            home: entry.homeTeam ? `${entry.home} (${entry.homeTeam})` : entry.home,
+            home: entry.home,
             homeScore: null,
-            away: entry.awayTeam ? `${entry.away} (${entry.awayTeam})` : entry.away,
+            homeTeam: entry.homeTeam ?? null,
+            away: entry.away,
             awayScore: null,
+            awayTeam: entry.awayTeam ?? null
           };
         }),
       };
