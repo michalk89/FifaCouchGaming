@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store";
 import { DrawResultItemModel } from "src/app/models/draw-result-item.model";
 import { ScheduleResultItemModel } from "src/app/models/schedule-result-item.model";
+import { ScheduleResultModel } from "src/app/models/schedule-result.model";
 import { TournamentScheduleEntryModel } from "src/app/models/tournament-schedule-entry.model";
 
 export const setInitialStandings = createAction(
@@ -10,7 +11,7 @@ export const setInitialStandings = createAction(
 
 export const setInitialSchedule = createAction(
   "[Tournament] Set Initial Schedule",
-  props<{ scheduleResults: ScheduleResultItemModel[] }>()
+  props<{ scheduleResults: ScheduleResultModel }>()
 );
 
 export const updateStandings = createAction(
@@ -23,4 +24,7 @@ export const updateSchedule = createAction(
   props<{ entry: TournamentScheduleEntryModel }>()
 );
 
+export const tournamentScheduleUpdated = createAction(
+  "[Tournament] Schedule Updated"
+);
 

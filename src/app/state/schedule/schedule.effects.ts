@@ -3,8 +3,8 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { State } from "../app.state";
 import { SchedulePageActions, ScheduleApiActions } from "./actions";
-import { catchError, map, mergeMap, of, tap } from "rxjs";
-import { getCurrentSchedule, getCurrentScheduleResults } from ".";
+import { catchError, map, mergeMap, of } from "rxjs";
+import { getCurrentSchedule } from ".";
 import { TournamentPageActions } from "../tournament/actions";
 
 @Injectable()
@@ -28,7 +28,7 @@ export class ScheduleEffects {
   setTournamentSchedule$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(SchedulePageActions.setCurrentSchedule),
-      mergeMap(action => of(TournamentPageActions.setInitialSchedule({ scheduleResults: action.schedule.scheduleResults?.results ?? [] })))
+      mergeMap(action => of(TournamentPageActions.setInitialSchedule({ scheduleResults: action.schedule.scheduleResults! })))
     );
   });
 }

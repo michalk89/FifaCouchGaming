@@ -349,25 +349,99 @@ const initialState: SelectionsState = {
       id: 4,
       name: "Ligue 1",
       flagUrl: "/assets/france.png",
-      teams: []
+      teams: [
+        {
+          id: 61,
+          name: "PSG",
+          stars: 5,
+        },
+        {
+          id: 62,
+          name: "Lyon",
+          stars: 4,
+        },
+        {
+          id: 63,
+          name: "Monaco",
+          stars: 4,
+        },
+        {
+          id: 64,
+          name: "Marsylia",
+          stars: 4,
+        },
+      ]
     },
     {
       id: 5,
       name: "Bundesliga",
       flagUrl: "/assets/germany.png",
-      teams: []
+      teams: [
+        {
+          id: 65,
+          name: "BVB",
+          stars: 4,
+        },
+        {
+          id: 66,
+          name: "Bayern",
+          stars: 4,
+        },
+        {
+          id: 67,
+          name: "Leverkusen",
+          stars: 4,
+        },
+        {
+          id: 68,
+          name: "Lipsk",
+          stars: 4,
+        },
+      ]
     },
     {
       id: 6,
       name: "Primeira Liga",
       flagUrl: "/assets/portugal.png",
-      teams: []
+      teams: [
+        {
+          id: 69,
+          name: "Benfica",
+          stars: 4,
+        },
+        {
+          id: 70,
+          name: "Sporting",
+          stars: 4,
+        },
+        {
+          id: 71,
+          name: "Porto",
+          stars: 4,
+        },
+      ]
     },
     {
       id: 7,
       name: "Eredivisie",
       flagUrl: "/assets/netherlands.png",
-      teams: []
+      teams: [
+        {
+          id: 72,
+          name: "Ajax",
+          stars: 4,
+        },
+        {
+          id: 73,
+          name: "PSV",
+          stars: 4,
+        },
+        {
+          id: 74,
+          name: "Feyenoord",
+          stars: 4,
+        },
+      ]
     },
     {
       id: 8,

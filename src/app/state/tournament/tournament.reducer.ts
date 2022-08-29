@@ -43,14 +43,14 @@ export const tournamentReducer = createReducer<TournamentState>(
     (state, action): TournamentState => {
       return {
         ...state,
-        schedule: state.schedule.length > 0 && state.schedule.length == action.scheduleResults.length ? state.schedule : action.scheduleResults.map((entry, i) => {
+        schedule: action.scheduleResults.results.map((entry, i) => {
           return {
             id: i + 1,
             home: entry.home,
-            homeScore: null,
+            homeScore: state.schedule[i]?.homeScore && state.schedule[i].homeTeam === entry.homeTeam ? state.schedule[i].homeScore : null,
             homeTeam: entry.homeTeam ?? null,
             away: entry.away,
-            awayScore: null,
+            awayScore: state.schedule[i]?.awayScore && state.schedule[i].awayTeam === entry.awayTeam ? state.schedule[i].awayScore : null,
             awayTeam: entry.awayTeam ?? null
           };
         }),
@@ -113,5 +113,5 @@ export const tournamentReducer = createReducer<TournamentState>(
         schedule: [...updatedSchedule]
       };
     }
-  )
+  ),
 );
