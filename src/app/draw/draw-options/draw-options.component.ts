@@ -4,10 +4,8 @@ import { DrawOptionsModel } from "src/app/models/draw-options.model";
 import { GroupModel } from "src/app/models/group.model";
 import { DrawResultItemModel } from "src/app/models/draw-result-item.model";
 import { SelectionModel } from "src/app/models/selection.model";
-import { TeamModel } from "src/app/models/team.model";
 import { DrawState } from "src/app/state/draw/draw.reducer";
-import { GameplayTypeEnum } from "src/app/enums/gameplay-type.enum";
-import { PlayerModel } from "src/app/models/player.model";
+import { DrawService } from "src/app/services/draw/draw.service";
 
 @Component({
   selector: "app-draw-options",
@@ -26,7 +24,7 @@ export class DrawOptionsComponent implements OnInit {
 
   optionsForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private drawService: DrawService) {}
 
   ngOnInit(): void {
     const drawExists =
@@ -67,7 +65,7 @@ export class DrawOptionsComponent implements OnInit {
     const gameplayType = this.gameplayTypeControl.value;
     const canRepeat = this.canTeamsRepeatControl.value;
 
-    const o: DrawOptionsModel = {
+    const drawOptions: DrawOptionsModel = {
       selectionId: +selectionId,
       groupId: +groupId,
       teamsPerPlayer: +teamsPerPlayer,
@@ -75,77 +73,12 @@ export class DrawOptionsComponent implements OnInit {
       canTeamsRepeat: canRepeat === "true",
     };
 
-    this.draw(o);
-  };
+    const results = this.drawService.draw(drawOptions, this.groups!, this.selections!);
 
-  draw = (options: DrawOptionsModel) => {
-    const players =
-      this.groups?.find((g) => g.id === options.groupId)?.players ?? [];
-    const teams =
-      this.selections?.find((s) => s.id === options.selectionId)
-        ?.selectedTeams ?? [];
-
-    if (players?.length > 0 && teams?.length > 0) {
-      const results: DrawResultItemModel[] =
-        options.gameplayType === GameplayTypeEnum.SINGLE
-          ? this.getDrawResultsForSingleGameplay(players)
-          : this.getDrawResultsForPairGameplay(players);
-
-      let availableTeams = [...teams];
-      for (let i = 0; i < options.teamsPerPlayer; i++) {
-        results.forEach((r) => {
-          const teamName = this.drawTeam(availableTeams);
-          if (!options.canTeamsRepeat) {
-            availableTeams = availableTeams.filter((t) => t.name !== teamName);
-          }
-
-          r.drawnTeams.push(teamName);
-        });
-      }
-
-      this.resultsDrawnEvent.emit(results);
-      this.drawCompletedEvent.emit({
-        options,
-        results,
-      });
-    }
-  };
-
-  drawTeam = (options: TeamModel[]): string => {
-    return options.length > 0
-      ? options[Math.floor(Math.random() * options.length)].name
-      : "-";
-  };
-
-  getDrawResultsForSingleGameplay = (
-    players: PlayerModel[]
-  ): DrawResultItemModel[] => {
-    return players.map((p) => {
-      return {
-        playerName: p.name,
-        drawnTeams: [],
-      };
-    });
-  };
-
-  getDrawResultsForPairGameplay = (players: PlayerModel[]): DrawResultItemModel[] => {
-    const playerNames = players.map((p) => p.name);
-    
-    const pairs: PlayerModel[] = playerNames.flatMap(
-      (player1, index) =>
-        playerNames.slice(index + 1).map((player2) => {
-          return {
-            id: index + 1,
-            name: `${player1} & ${player2}`
-          };
-        })
-    );
-    
-    return pairs.map((p) => {
-      return {
-        playerName: p.name,
-        drawnTeams: [],
-      };
+    this.resultsDrawnEvent.emit(results);
+    this.drawCompletedEvent.emit({
+      options: drawOptions,
+      results,
     });
   };
 
